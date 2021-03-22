@@ -1,11 +1,15 @@
-import React from 'react';
-import { View, StyleSheet, Text, TextInput } from 'react-native';
+import React from "react";
+import { View, StyleSheet, TextInput, Text } from "react-native";
 
-function Input(props){
-	return(
+function Input(props) {
+	return (
 		<View style={styles.container}>
 			<Text style={styles.label}>{props.label}</Text>
-			<TextInput style={styles.input} />
+			<TextInput
+				style={styles.input}
+				keyboardType={props.type || "default"}
+				secureTextEntry={props.isVisible || false}
+			/>
 		</View>
 	);
 }
@@ -15,7 +19,7 @@ const styles = StyleSheet.create({
 		display: "flex",
 		width: "100%",
 		flexDirection: "column",
-		marginBottom: 22
+		marginBottom: 22,
 	},
 	label: {
 		color: "#F8773B",
@@ -27,8 +31,8 @@ const styles = StyleSheet.create({
 	input: {
 		height: 48,
 		display: "flex",
-		justifyContent: 'center',
-		alignItems: 'center',
+		justifyContent: "center",
+		alignItems: "center",
 
 		borderWidth: 2.5,
 		borderRadius: 30,
@@ -39,7 +43,7 @@ const styles = StyleSheet.create({
 		color: "#2B2B2B",
 		fontFamily: "Poppins",
 		fontSize: 15,
-	}
-})
+	},
+});
 
 export default Input;
