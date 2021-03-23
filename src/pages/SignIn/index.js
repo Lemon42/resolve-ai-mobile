@@ -28,7 +28,7 @@ function SignIn({ navigation }) {
 	function sendForm() {
 		setSendMessage("");
 
-		axios.post("http://192.168.1.191:3333/login", {...form, type: "mobile"})
+		axios.post("http://192.168.1.191:3333/login", { ...form, type: "mobile" })
 			.then(function (response) {
 				setSendMessage(response.data.error);
 			})
@@ -38,8 +38,8 @@ function SignIn({ navigation }) {
 	}
 
 	return (
-		<SafeAreaView>
-			<ScrollView>
+		<SafeAreaView style={styles.container}>
+			<ScrollView >
 				<View style={styles.topContainer}>
 					<Text style={styles.title}>Bem-vindo de volta!</Text>
 					<Input
@@ -101,10 +101,8 @@ function SignIn({ navigation }) {
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
-		flexDirection: "column",
-		alignItems: "center",
-		justifyContent: "space-between",
+		display: "flex",
+		height: "100%",
 	},
 	topContainer: {
 		width: "100%",
@@ -140,14 +138,11 @@ const styles = StyleSheet.create({
 		textAlign: "center",
 	},
 	bottomContainer: {
+		flex: 1,
 		width: "100%",
-		height: 185,
-
-		display: "flex",
+		height: "100%",
 		alignItems: "flex-end",
-		justifyContent: "flex-end",
-
-		marginTop: -22,
+		justifyContent: "flex-end"
 	},
 });
 
