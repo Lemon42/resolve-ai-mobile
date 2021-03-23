@@ -7,6 +7,7 @@ import {
 	Image,
 	SafeAreaView,
 	ScrollView,
+	Dimensions,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import axios from "axios";
@@ -24,6 +25,7 @@ function SignIn({ navigation }) {
 		pass: "",
 	});
 	const [sendMessage, setSendMessage] = useState("");
+	const winSize = Dimensions.get('window');
 
 	function sendForm() {
 		setSendMessage("");
@@ -39,7 +41,7 @@ function SignIn({ navigation }) {
 
 	return (
 		<SafeAreaView style={styles.container}>
-			<ScrollView >
+			<ScrollView contentContainerStyle={{ flex: 1 }}>
 				<View style={styles.topContainer}>
 					<Text style={styles.title}>Bem-vindo de volta!</Text>
 					<Input
@@ -89,8 +91,8 @@ function SignIn({ navigation }) {
 					<Image
 						source={require("../../assets/images/GirlAndDog.png")}
 						style={{
-							height: 134,
-							width: 185,
+							height: (winSize.height / 4),
+							width: (winSize.width / 2),
 						}}
 					/>
 				</View>
@@ -139,8 +141,7 @@ const styles = StyleSheet.create({
 	},
 	bottomContainer: {
 		flex: 1,
-		width: "100%",
-		height: "100%",
+		alignSelf: "flex-end",
 		alignItems: "flex-end",
 		justifyContent: "flex-end"
 	},
