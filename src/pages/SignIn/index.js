@@ -41,7 +41,7 @@ function SignIn({ navigation }) {
 
 	return (
 		<SafeAreaView style={styles.container}>
-			<ScrollView contentContainerStyle={dimensions.height > 5000 ? { flex: 1 } : {}}>
+			<ScrollView contentContainerStyle={dimensions.height > 961 ? { flex: 1 } : {}}>
 				<View style={styles.topContainer}>
 					<Text style={styles.title}>Bem-vindo de volta!</Text>
 					<Input
