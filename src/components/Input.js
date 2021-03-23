@@ -9,6 +9,7 @@ function Input(props) {
 				style={styles.input}
 				keyboardType={props.type || "default"}
 				secureTextEntry={props.isVisible || false}
+				onChangeText={props.onChangeText}
 			/>
 		</View>
 	);

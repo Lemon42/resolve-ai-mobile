@@ -9,6 +9,7 @@ import {
 	ScrollView,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
+import axios from "axios";
 
 // Components
 import Input from "../../components/Input";
@@ -17,11 +18,24 @@ import Input from "../../components/Input";
 import buttonStyle from "../../styles/button";
 
 function SignIn({ navigation }) {
+	const [passIsVisible, setPassIsVisible] = useState(true);
 	const [form, setForm] = useState({
 		email: "",
 		pass: "",
 	});
-	const [passIsVisible, setPassIsVisible] = useState(true);
+	const [sendMessage, setSendMessage] = useState("");
+
+	function sendForm() {
+		setSendMessage("");
+
+		axios.post("http://192.168.1.191:3333/login", {...form, type: "mobile"})
+			.then(function (response) {
+				setSendMessage(response.data.error);
+			})
+			.catch(function (error) {
+				setSendMessage("Ops! Tivemos um erro.");
+			});
+	}
 
 	return (
 		<SafeAreaView>
@@ -31,18 +45,19 @@ function SignIn({ navigation }) {
 					<Input
 						label="Email:"
 						type="email-address"
-						onChange={(value) => setForm({ ...form, value })}
+						onChangeText={(value) => setForm({ ...form, email: value })}
 					/>
 					<Input
 						label="Senha:"
 						isVisible={passIsVisible}
-						onChange={(value) => setForm({ ...form, value })}
+						onChangeText={(value) => setForm({ ...form, pass: value })}
 					/>
 
 					<TouchableOpacity
 						onPress={() => setPassIsVisible(!passIsVisible)}
 					>
 						<View style={styles.togglePassVisibleContainer}>
+							<Text style={styles.alertMessage}>{sendMessage}</Text>
 							<Icon
 								name={passIsVisible ? "eye-slash" : "eye"}
 								size={18}
@@ -52,7 +67,8 @@ function SignIn({ navigation }) {
 					</TouchableOpacity>
 					<View>
 						<TouchableOpacity
-							style={{ ...buttonStyle.container, marginTop: 15 }}
+							onPress={() => sendForm()}
+							style={{ ...buttonStyle.container, marginTop: 30 }}
 						>
 							<Text style={buttonStyle.button}>Entrar</Text>
 						</TouchableOpacity>
@@ -106,13 +122,18 @@ const styles = StyleSheet.create({
 	togglePassVisibleContainer: {
 		width: "100%",
 		display: "flex",
-		alignItems: "flex-end",
-		justifyContent: "flex-end",
+		flexDirection: "row",
+		justifyContent: "space-between",
+		paddingHorizontal: 10,
 		marginTop: -5,
+	},
+	alertMessage: {
+		fontFamily: "Poppins Medium",
+		fontSize: 14,
+		color: "#F53455",
 	},
 	backButton: {
 		marginTop: 25,
-		marginBottom: -25,
 		fontFamily: "Poppins",
 		fontSize: 14,
 		color: "#919191",
@@ -125,6 +146,8 @@ const styles = StyleSheet.create({
 		display: "flex",
 		alignItems: "flex-end",
 		justifyContent: "flex-end",
+
+		marginTop: -22,
 	},
 });
 
