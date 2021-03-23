@@ -25,7 +25,7 @@ function SignIn({ navigation }) {
 		pass: "",
 	});
 	const [sendMessage, setSendMessage] = useState("");
-	const winSize = Dimensions.get('window');
+	const dimensions = Dimensions.get('window');
 
 	function sendForm() {
 		setSendMessage("");
@@ -41,7 +41,7 @@ function SignIn({ navigation }) {
 
 	return (
 		<SafeAreaView style={styles.container}>
-			<ScrollView contentContainerStyle={{ flex: 1 }}>
+			<ScrollView contentContainerStyle={dimensions.height > 5000 ? { flex: 1 } : {}}>
 				<View style={styles.topContainer}>
 					<Text style={styles.title}>Bem-vindo de volta!</Text>
 					<Input
@@ -91,8 +91,8 @@ function SignIn({ navigation }) {
 					<Image
 						source={require("../../assets/images/GirlAndDog.png")}
 						style={{
-							height: (winSize.height / 4),
-							width: (winSize.width / 2),
+							height: (dimensions.height / 4),
+							width: (dimensions.width / 2),
 						}}
 					/>
 				</View>
@@ -143,7 +143,8 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignSelf: "flex-end",
 		alignItems: "flex-end",
-		justifyContent: "flex-end"
+		justifyContent: "flex-end",
+		marginTop: 25,
 	},
 });
 
