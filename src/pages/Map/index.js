@@ -1,10 +1,17 @@
-import React from 'react';
-import {View, Text} from 'react-native';
+import React from "react";
+import { View, Text, TouchableOpacity } from "react-native";
+
+import { useAccount } from '../../contexts/AccountContext';
 
 function Map() {
+
+	const { signOut } = useAccount();
+
 	return (
-		<View>
-			<Text>mapa</Text>
+		<View style={{ flex: 1 }}>
+			<TouchableOpacity onPress={() => signOut()}>
+				<Text>salve</Text>
+			</TouchableOpacity>
 		</View>
 	);
 }

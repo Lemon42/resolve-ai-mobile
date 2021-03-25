@@ -10,7 +10,6 @@ import {
 	Dimensions,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import axios from "axios";
 
 // Components
 import Input from "../../components/Input";
@@ -18,7 +17,13 @@ import Input from "../../components/Input";
 // Styles
 import buttonStyle from "../../styles/button";
 
+// Context
+import { useAccount } from '../../contexts/AccountContext';
+
 function SignIn({ navigation }) {
+
+	const { singIn } = useAccount();
+
 	const [passIsVisible, setPassIsVisible] = useState(true);
 	const [form, setForm] = useState({
 		email: "",
@@ -27,16 +32,10 @@ function SignIn({ navigation }) {
 	const [sendMessage, setSendMessage] = useState("");
 	const dimensions = Dimensions.get('window');
 
-	function sendForm() {
+	async function sendForm() {
 		setSendMessage("");
-
-		axios.post("http://192.168.1.191:3333/login", { ...form, type: "mobile" })
-			.then(function (response) {
-				setSendMessage(response.data.error);
-			})
-			.catch(function (error) {
-				setSendMessage("Ops! Tivemos um erro.");
-			});
+		const response =  await singIn(form.email, form.pass);
+		setSendMessage(response);
 	}
 
 	return (
