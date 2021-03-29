@@ -8,7 +8,7 @@ import { useAccount } from '../contexts/AccountContext';
 function Routes() {
 
 	const { account } = useAccount();
-	console.log(account)
+
 	return (
 		<>
 			{

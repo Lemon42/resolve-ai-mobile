@@ -13,15 +13,15 @@ import Icon from "react-native-vector-icons/FontAwesome";
 
 // Components
 import Input from "../../components/Input";
+import PassInput from "../../components/PassInput";
 
 // Styles
 import buttonStyle from "../../styles/button";
 
 // Context
-import { useAccount } from '../../contexts/AccountContext';
+import { useAccount } from "../../contexts/AccountContext";
 
 function SignIn({ navigation }) {
-
 	const { singIn } = useAccount();
 
 	const [passIsVisible, setPassIsVisible] = useState(true);
@@ -30,46 +30,37 @@ function SignIn({ navigation }) {
 		pass: "",
 	});
 	const [sendMessage, setSendMessage] = useState("");
-	const dimensions = Dimensions.get('window');
+	const dimensions = Dimensions.get("window");
 
 	async function sendForm() {
 		setSendMessage("");
-		const response =  await singIn(form.email, form.pass);
+		const response = await singIn(form.email, form.pass);
 		setSendMessage(response);
 	}
 
 	return (
 		<SafeAreaView style={styles.container}>
-			<ScrollView contentContainerStyle={dimensions.height > 961 ? { flex: 1 } : {}}>
+			<ScrollView
+				contentContainerStyle={dimensions.height > 961 ? { flex: 1 } : {}}
+			>
 				<View style={styles.topContainer}>
-					<Text style={styles.title}>Bem-vindo de volta!</Text>
+					<Text style={styles.title}>Bem-vindo de volta!{}</Text>
 					<Input
 						label="Email:"
 						type="email-address"
 						onChangeText={(value) => setForm({ ...form, email: value })}
 					/>
-					<Input
+					<PassInput
 						label="Senha:"
-						isVisible={passIsVisible}
 						onChangeText={(value) => setForm({ ...form, pass: value })}
 					/>
-
-					<TouchableOpacity
-						onPress={() => setPassIsVisible(!passIsVisible)}
-					>
-						<View style={styles.togglePassVisibleContainer}>
-							<Text style={styles.alertMessage}>{sendMessage}</Text>
-							<Icon
-								name={passIsVisible ? "eye-slash" : "eye"}
-								size={18}
-								color="#999"
-							/>
-						</View>
-					</TouchableOpacity>
+					<View style={{marginLeft: 7, marginBottom: 5}}>
+						<Text style={styles.alertMessage}>{sendMessage}</Text>
+					</View>
 					<View>
 						<TouchableOpacity
 							onPress={() => sendForm()}
-							style={{ ...buttonStyle.container, marginTop: 30 }}
+							style={{ ...buttonStyle.container, marginTop: 15 }}
 						>
 							<Text style={buttonStyle.button}>Entrar</Text>
 						</TouchableOpacity>
@@ -90,8 +81,8 @@ function SignIn({ navigation }) {
 					<Image
 						source={require("../../assets/images/GirlAndDog.png")}
 						style={{
-							height: (dimensions.height / 4),
-							width: (dimensions.width / 2),
+							height: dimensions.height / 4,
+							width: dimensions.width / 2,
 						}}
 					/>
 				</View>
@@ -117,14 +108,6 @@ const styles = StyleSheet.create({
 		fontSize: 25,
 		color: "#F8773B",
 		textAlign: "center",
-	},
-	togglePassVisibleContainer: {
-		width: "100%",
-		display: "flex",
-		flexDirection: "row",
-		justifyContent: "space-between",
-		paddingHorizontal: 10,
-		marginTop: -5,
 	},
 	alertMessage: {
 		fontFamily: "Poppins Medium",

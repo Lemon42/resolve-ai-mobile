@@ -8,8 +8,7 @@ function Input(props) {
 			<TextInput
 				style={styles.input}
 				keyboardType={props.type || "default"}
-				secureTextEntry={props.isVisible || false}
-				onChangeText={props.onChangeText || {}}
+				onChangeText={props.onChangeText}
 			/>
 		</View>
 	);

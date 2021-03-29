@@ -11,6 +11,7 @@ import Icon from "react-native-vector-icons/FontAwesome5";
 
 // Components
 import Input from "../../components/Input";
+import PassInput from "../../components/PassInput";
 
 // Assets
 import Figure from "../../assets/svgs/figure1.svg";
@@ -35,8 +36,9 @@ function CreateAccount({ navigation }) {
 						<Input label="Nome:" />
 						<Input label="Email:" />
 						<Input label="Cidade:" />
-						<Input label="Senha:" />
-						<Input label="Confirme sua senha:" />
+						<PassInput label="Senha:" />
+						<PassInput label="Confirme a senha:" />
+						
 
 						<TouchableOpacity
 							onPress={() => navigation.navigate('SignIn')}
