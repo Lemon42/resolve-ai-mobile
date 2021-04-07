@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
 	View,
 	SafeAreaView,
@@ -11,12 +11,15 @@ import Icon from "react-native-vector-icons/FontAwesome5";
 
 // Components
 import Input from "../../components/Input";
+import SelectInput from "../../components/SelectInput";
 import PassInput from "../../components/PassInput";
 
 // Assets
 import Figure from "../../assets/svgs/figure1.svg";
 
 function CreateAccount({ navigation }) {
+	const [city, setCity] = useState('');
+
 	return (
 		<SafeAreaView>
 			<ScrollView>
@@ -35,13 +38,25 @@ function CreateAccount({ navigation }) {
 					<View style={styles.wrapper}>
 						<Input label="Nome:" />
 						<Input label="Email:" />
-						<Input label="Cidade:" />
+						<SelectInput
+							value={city}
+							setValue={setCity}
+							items={[
+								{ label: "Jundiaí", value: "Jundiaí" },
+								{ label: "Vinhedo", value: "Vinhedo" },
+								{ label: "Várzea Paulista", value: "Várzea Paulista" },
+								{ label: "Campo Limpo Paulista", value: "Campo Limpo Paulista" },
+								{ label: "Louveira", value: "Louveira" },
+								{ label: "Cabreúva", value: "Cabreúva" },
+							]}
+							label="Cidade:"
+							placeholder="Escolha uma cidade"
+						/>
 						<PassInput label="Senha:" />
 						<PassInput label="Confirme a senha:" />
-						
 
 						<TouchableOpacity
-							onPress={() => navigation.navigate('SignIn')}
+							onPress={() => navigation.navigate("SignIn")}
 							style={{
 								display: "flex",
 								justifyContent: "center",
