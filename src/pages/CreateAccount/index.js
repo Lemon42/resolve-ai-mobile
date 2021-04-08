@@ -13,6 +13,7 @@ import Icon from "react-native-vector-icons/FontAwesome5";
 import Input from "../../components/Input";
 import SelectInput from "../../components/SelectInput";
 import PassInput from "../../components/PassInput";
+import ImageInput from "../../components/ImageInput";
 
 // Assets
 import Figure from "../../assets/svgs/figure1.svg";
@@ -55,12 +56,15 @@ function CreateAccount({ navigation }) {
 						<PassInput label="Senha:" />
 						<PassInput label="Confirme a senha:" />
 
+						<ImageInput label="Que tal uma foto de perfil?" />
+
 						<TouchableOpacity
 							onPress={() => navigation.navigate("SignIn")}
 							style={{
 								display: "flex",
 								justifyContent: "center",
 								flexDirection: "row",
+								marginTop: 35
 							}}
 						>
 							<Text style={styles.backButton}>Já tem uma conta? </Text>
