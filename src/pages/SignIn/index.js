@@ -9,7 +9,6 @@ import {
 	ScrollView,
 	Dimensions,
 } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
 
 // Components
 import Input from "../../components/Input";
