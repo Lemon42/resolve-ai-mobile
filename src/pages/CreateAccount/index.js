@@ -56,7 +56,7 @@ function CreateAccount({ navigation }) {
 						<PassInput label="Senha:" />
 						<PassInput label="Confirme a senha:" />
 
-						<ImageInput label="Que tal uma foto de perfil?" />
+						<ImageInput label="Que tal uma foto de perfil?" editLabel="Você está ótimo nessa foto!" />
 
 						<TouchableOpacity
 							onPress={() => navigation.navigate("SignIn")}
