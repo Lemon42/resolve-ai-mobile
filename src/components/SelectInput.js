@@ -5,24 +5,13 @@ import RNPickerSelect from "react-native-picker-select";
 import Icon from "react-native-vector-icons/FontAwesome5";
 
 function SelectInput(props) {
-	const [selectValue, setSelectValue] = useState({
-		value: props.value,
-		setValue: props.setValue,
-	});
-
 	return (
 		<View style={containerStyle.container}>
 			<Text style={containerStyle.label}>{props.label}</Text>
 
 			<View style={style.wrapper}>
 				<RNPickerSelect
-					onValueChange={(value) =>
-						setSelectValue({
-							...selectValue,
-							value: value,
-							exists: true,
-						})
-					}
+					onValueChange={(value) => props.setValue(value)}
 					items={props.items}
 
 					useNativeAndroidPickerStyle={true}

@@ -8,6 +8,7 @@ import {
 	TouchableOpacity,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome5";
+import axios from "axios";
 
 // Components
 import Input from "../../components/Input";
@@ -18,8 +19,92 @@ import ImageInput from "../../components/ImageInput";
 // Assets
 import Figure from "../../assets/svgs/figure1.svg";
 
+// Styles
+import buttonStyle from "../../styles/button";
+
+// Context
+import { useAccount } from "../../contexts/AccountContext";
+
 function CreateAccount({ navigation }) {
-	const [city, setCity] = useState('');
+	const { singIn } = useAccount();
+
+	const [form, setForm] = useState({
+		name: "",
+		email: "",
+		city: "",
+		pass: "",
+		confirmationPass: "",
+	});
+	const [message, setMessage] = useState("");
+	const [picture, setPicture] = useState(false);
+
+	function validateForm() {
+		if (form.pass == "" || form.pass == null) {
+			setMessage("Digite uma senha!");
+		} else if (form.pass != form.confirmationPass) {
+			setMessage("As senhas não são iguais!");
+		} else {
+			let validate = true;
+
+			Object.keys(form).forEach(function (item) {
+				if (form[item] == "" || form[item] == null) {
+					setMessage("Preencha todos os campos");
+					validate = false;
+				}
+			});
+
+			if (!validate) {
+				return;
+			}
+
+			setMessage("");
+			sendForm();
+		}
+	}
+
+	async function sendForm() {
+		let created = true;
+		var formData = new FormData();
+
+		// Lidando com a imagem
+		if (picture) {
+			formData.append('picture', {
+				name: picture.fileName,
+				type: picture.type,
+				uri:
+				  Platform.OS === 'android' ? picture.uri : picture.uri.replace('file://', ''),
+			  });
+		}
+
+		// Transformando o JSON em Form Data
+		Object.keys(form).forEach(function (item) {
+			formData.append(item, form[item]);
+		});
+
+		formData.append("lastName", "oiiiii");
+
+		await axios
+			.post("http://192.168.1.116:3333/create-user", formData, {
+				headers: {
+					"Content-Type": "multipart/form-data",
+				},
+			})
+			.then(async (response) => {
+				if(response.data.error) {
+					setMessage(response.data.type);
+					created = false;
+					return;
+				}
+			})
+			.catch(() => {
+				setMessage("Ops! Tivemos um erro...");
+			});
+
+			if(created) {
+				const response = await singIn(form.email, form.pass);
+				setMessage(response);
+			}
+	}
 
 	return (
 		<SafeAreaView>
@@ -37,26 +122,56 @@ function CreateAccount({ navigation }) {
 					<Text style={styles.title}>Crie uma conta</Text>
 					<Figure width={230} height={150} style={{ marginBottom: -25 }} />
 					<View style={styles.wrapper}>
-						<Input label="Nome:" />
-						<Input label="Email:" />
+						<Input
+							label="Nome:"
+							onChangeText={(value) => setForm({ ...form, name: value })}
+						/>
+						<Input
+							label="Email:"
+							onChangeText={(value) =>
+								setForm({ ...form, email: value })
+							}
+						/>
 						<SelectInput
-							value={city}
-							setValue={setCity}
+							setValue={(city) => setForm({ ...form, city: city })}
 							items={[
 								{ label: "Jundiaí", value: "Jundiaí" },
 								{ label: "Vinhedo", value: "Vinhedo" },
 								{ label: "Várzea Paulista", value: "Várzea Paulista" },
-								{ label: "Campo Limpo Paulista", value: "Campo Limpo Paulista" },
+								{
+									label: "Campo Limpo Paulista",
+									value: "Campo Limpo Paulista",
+								},
 								{ label: "Louveira", value: "Louveira" },
 								{ label: "Cabreúva", value: "Cabreúva" },
 							]}
 							label="Cidade:"
 							placeholder="Escolha uma cidade"
 						/>
-						<PassInput label="Senha:" />
-						<PassInput label="Confirme a senha:" />
+						<PassInput
+							label="Senha:"
+							onChangeText={(value) => setForm({ ...form, pass: value })}
+						/>
+						<PassInput
+							label="Confirme a senha:"
+							onChangeText={(value) =>
+								setForm({ ...form, confirmationPass: value })
+							}
+						/>
+						<ImageInput
+							setImageProp={setPicture}
+							label="Que tal uma foto de perfil?"
+							editLabel="Você está ótimo nessa foto!"
+						/>
 
-						<ImageInput label="Que tal uma foto de perfil?" editLabel="Você está ótimo nessa foto!" />
+						<Text style={styles.alertMessage}>{message}</Text>
+
+						<TouchableOpacity
+							onPress={() => validateForm()}
+							style={{ ...buttonStyle.container, marginTop: -25 }}
+						>
+							<Text style={buttonStyle.button}>Cadastrar</Text>
+						</TouchableOpacity>
 
 						<TouchableOpacity
 							onPress={() => navigation.navigate("SignIn")}
@@ -64,7 +179,7 @@ function CreateAccount({ navigation }) {
 								display: "flex",
 								justifyContent: "center",
 								flexDirection: "row",
-								marginTop: 35
+								marginTop: 35,
 							}}
 						>
 							<Text style={styles.backButton}>Já tem uma conta? </Text>
@@ -112,6 +227,13 @@ const styles = StyleSheet.create({
 		color: "#919191",
 		textAlign: "center",
 		marginBottom: 25,
+	},
+	alertMessage: {
+		fontFamily: "Poppins Bold",
+		fontSize: 15,
+		color: "#FFE921",
+		marginTop: 22,
+		marginBottom: 44,
 	},
 });
 

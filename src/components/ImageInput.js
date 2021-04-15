@@ -20,7 +20,7 @@ function ImageInput(props) {
 							if (response.didCancel) {
 								return;
 							}
-
+							props.setImageProp(response);
 							setImageFile(response);
 						}
 					)
@@ -48,7 +48,10 @@ function ImageInput(props) {
 
 			{imageFile ? (
 				<TouchableOpacity
-					onPress={() => setImageFile(false)}
+					onPress={() => {
+						setImageFile(false);
+						props.setImageProp(false);
+					}}
 					style={styles.removeImageContainer}
 				>
 					<Icon

@@ -14,7 +14,7 @@ export default function AccountProvider(props) {
 			const storageToken = await AsyncStorage.getItem("@token");
 
 			if (storageEmail && storageToken) {
-				const response = await axios.post("http://192.168.1.191:3333/validate", {
+				const response = await axios.post("http://192.168.1.116:3333/validate", {
 					token: storageToken,
 					email: storageEmail,
 				}).then((response) => {
@@ -35,7 +35,7 @@ export default function AccountProvider(props) {
 
 	async function singIn(userEmail, userPass) {
 		const response = await axios
-			.post("http://192.168.1.191:3333/login", {
+			.post("http://192.168.1.116:3333/login", {
 				email: userEmail,
 				pass: userPass,
 				type: "mobile",
