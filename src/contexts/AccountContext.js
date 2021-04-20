@@ -16,20 +16,22 @@ export default function AccountProvider(props) {
 			const storageToken = await AsyncStorage.getItem("@token");
 
 			if (storageEmail && storageToken) {
-				const response = await axios.post(`${API_URL}/validate`, {
-					token: storageToken,
-					email: storageEmail,
-				}).then((response) => {
-					if(!response.data.error){
-						setAccount({
-							token: storageToken,
-							email: storageEmail,
-							...response.data
-						});
-					}
+				const response = await axios
+					.post(`${API_URL}/validate`, {
+						token: storageToken,
+						email: storageEmail,
+					})
+					.then((response) => {
+						if (!response.data.error) {
+							setAccount({
+								token: storageToken,
+								email: storageEmail,
+								...response.data,
+							});
+						}
 
-					return;
-				})
+						return;
+					});
 			}
 		}
 		loadStorageData();
@@ -61,8 +63,17 @@ export default function AccountProvider(props) {
 	}
 
 	async function signOut() {
-		await AsyncStorage.clear();
-		setAccount({});
+		const email = await AsyncStorage.getItem("@email");
+		const token = await AsyncStorage.getItem("@token");
+
+		axios
+			.delete(`${API_URL}/logout`, {
+				data: { email: email, token: token },
+			})
+			.then(async () => {
+				await AsyncStorage.clear();
+				setAccount({});
+			});
 	}
 
 	return (
