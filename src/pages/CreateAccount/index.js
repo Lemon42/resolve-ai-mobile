@@ -10,6 +10,8 @@ import {
 import Icon from "react-native-vector-icons/FontAwesome5";
 import axios from "axios";
 
+import { API_URL } from "@env";
+
 // Components
 import Input from "../../components/Input";
 import SelectInput from "../../components/SelectInput";
@@ -37,7 +39,7 @@ function CreateAccount({ navigation }) {
 	});
 	const [message, setMessage] = useState("");
 	const [picture, setPicture] = useState(false);
-
+	
 	function validateForm() {
 		if (form.pass == "" || form.pass == null) {
 			setMessage("Digite uma senha!");
@@ -68,12 +70,14 @@ function CreateAccount({ navigation }) {
 
 		// Lidando com a imagem
 		if (picture) {
-			formData.append('picture', {
+			formData.append("picture", {
 				name: picture.fileName,
 				type: picture.type,
 				uri:
-				  Platform.OS === 'android' ? picture.uri : picture.uri.replace('file://', ''),
-			  });
+					Platform.OS === "android"
+						? picture.uri
+						: picture.uri.replace("file://", ""),
+			});
 		}
 
 		// Transformando o JSON em Form Data
@@ -82,28 +86,27 @@ function CreateAccount({ navigation }) {
 		});
 
 		formData.append("lastName", "oiiiii");
-
 		await axios
-			.post("http://192.168.1.116:3333/create-user", formData, {
+			.post(`${API_URL}/create-user`, formData, {
 				headers: {
 					"Content-Type": "multipart/form-data",
 				},
 			})
 			.then(async (response) => {
-				if(response.data.error) {
+				if (response.data.error) {
 					setMessage(response.data.type);
 					created = false;
 					return;
 				}
 			})
-			.catch(() => {
+			.catch((error) => {
 				setMessage("Ops! Tivemos um erro...");
 			});
 
-			if(created) {
-				const response = await singIn(form.email, form.pass);
-				setMessage(response);
-			}
+		if (created) {
+			const response = await singIn(form.email, form.pass);
+			setMessage(response);
+		}
 	}
 
 	return (

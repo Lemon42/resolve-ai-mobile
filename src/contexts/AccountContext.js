@@ -4,6 +4,8 @@ import axios from "axios";
 
 const AccountContext = createContext();
 
+import { API_URL } from "@env";
+
 export default function AccountProvider(props) {
 	const [account, setAccount] = useState({});
 
@@ -14,7 +16,7 @@ export default function AccountProvider(props) {
 			const storageToken = await AsyncStorage.getItem("@token");
 
 			if (storageEmail && storageToken) {
-				const response = await axios.post("http://192.168.1.116:3333/validate", {
+				const response = await axios.post(`${API_URL}/validate`, {
 					token: storageToken,
 					email: storageEmail,
 				}).then((response) => {
@@ -35,7 +37,7 @@ export default function AccountProvider(props) {
 
 	async function singIn(userEmail, userPass) {
 		const response = await axios
-			.post("http://192.168.1.116:3333/login", {
+			.post(`${API_URL}/login`, {
 				email: userEmail,
 				pass: userPass,
 				type: "mobile",
