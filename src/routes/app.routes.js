@@ -8,7 +8,7 @@ const Stack = createStackNavigator();
 
 function AppStack() {
 	return (
-		<Stack.Navigator>
+		<Stack.Navigator screenOptions={{ headerShown: false }}>
 			<Stack.Screen name="Map" component={Map} />
 		</Stack.Navigator>
 	);
