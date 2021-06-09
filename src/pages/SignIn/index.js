@@ -68,7 +68,7 @@ function SignIn({ navigation }) {
 						onPress={() => navigation.navigate("CreateAccount")}
 					>
 						<Text style={styles.backButton}>
-							Não tem uma conta? {passIsVisible}
+							Não tem uma conta?
 							<Text style={{ fontFamily: "Poppins Bold" }}>
 								Cadastre.
 							</Text>

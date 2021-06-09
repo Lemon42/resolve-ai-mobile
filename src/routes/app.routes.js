@@ -5,6 +5,7 @@ import Icon from "react-native-vector-icons/Feather";
 
 // Pages
 import Map from '../pages/Map';
+import CreateProblem from '../pages/CreateProblem';
 
 // Telas de teste
 function GalleryPage() {
@@ -27,14 +28,6 @@ function UserPage() {
 	return (
 		<View>
 			<Text>usuário</Text>
-		</View>
-	);
-}
-
-function CreatePage() {
-	return (
-		<View>
-			<Text>criar problema</Text>
 		</View>
 	);
 }
@@ -82,7 +75,7 @@ function AppTab() {
 		>
 			<Tab.Screen name="List" component={ListPage} />
 			<Tab.Screen name="Map" component={Map} />
-			<Tab.Screen name="Post" component={CreatePage} />
+			<Tab.Screen name="Post" component={CreateProblem} />
 			<Tab.Screen name="Gallery" component={GalleryPage} />
 			<Tab.Screen name="User" component={UserPage} />
 		</Tab.Navigator>

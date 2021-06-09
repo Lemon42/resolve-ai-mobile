@@ -7,6 +7,14 @@ navigator.geolocation = require("@react-native-community/geolocation");
 export default class Map extends Component {
 	state = { region: null };
 
+	constructor(props) {
+		super(props)
+
+		this.state = {
+			markers: []
+		}
+	}
+
 	async componentDidMount() {
 		navigator.geolocation.getCurrentPosition(
 			async ({ coords: { latitude, longitude } }) => {
@@ -31,27 +39,35 @@ export default class Map extends Component {
 	}
 
 	render() {
-		const { region } = this.state;
+		// Verificando se o componente precisa adicionar marker
+		var addMarker = (e) => {};
+		if(this.props.setSelectLocation){
+			addMarker = (e) => {
+				this.setState({ markers: [{ latlng: e.nativeEvent.coordinate }] });
+				console.log(e.nativeEvent.coordinate)
+				this.props.setSelectLocation(e.nativeEvent.coordinate)
+			}
+		}
 
 		return (
-			<View style={{ flex: 1 }}>
+			<View style={{ flex: 1, overflow: 'hidden', borderRadius: this.props.borderRadius || 0 }}>
 				<MapView
 					style={{ flex: 1 }}
-					region={region}
+					region={this.state.region}
 					showsUserLocation
 					loadingEnabled
+
+					onPress={(e) => addMarker(e)}
 				>
+					{
+						this.state.markers.map((marker, index) => (
+							<MapView.Marker key={index} coordinate={marker.latlng} />
+						))
+
+
+					}
 				</MapView>
-				<View
-					style={{
-						position: 'absolute',//use absolute position to show button on top of the map
-						top: '90%', //for center align
-						alignSelf: 'flex-end' //for align to right
-					}}
-				>
-					<Text>salve</Text>
-				</View>
-			</View>
+			</View >
 		);
 	}
 }
