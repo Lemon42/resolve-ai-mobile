@@ -1,17 +1,92 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Text, View, StyleSheet } from 'react-native';
+import Icon from "react-native-vector-icons/Feather";
 
 // Pages
 import Map from '../pages/Map';
 
-const Stack = createStackNavigator();
-
-function AppStack() {
+// Telas de teste
+function GalleryPage() {
 	return (
-		<Stack.Navigator screenOptions={{ headerShown: false }}>
-			<Stack.Screen name="Map" component={Map} />
-		</Stack.Navigator>
+		<View>
+			<Text>Galeria</Text>
+		</View>
 	);
 }
 
-export default AppStack;
+function ListPage() {
+	return (
+		<View>
+			<Text>Lista</Text>
+		</View>
+	);
+}
+
+function UserPage() {
+	return (
+		<View>
+			<Text>usuário</Text>
+		</View>
+	);
+}
+
+function CreatePage() {
+	return (
+		<View>
+			<Text>criar problema</Text>
+		</View>
+	);
+}
+// fim das paginas de teste
+
+const Tab = createBottomTabNavigator();
+
+function AppTab() {
+	return (
+		<Tab.Navigator screenOptions={({ route }) => ({
+			tabBarIcon: ({ color, size }) => {
+				let iconName;
+
+				switch (route.name) {
+					case 'List':
+						iconName = 'list';
+						break;
+					case 'Map':
+						iconName = 'map';
+						break;
+					case 'Post':
+						iconName = 'plus-circle';
+						break;
+					case 'Gallery':
+						iconName = 'check-square';
+						break;
+					case 'User':
+						iconName = 'user';
+						break;
+					default:
+						iconName = 'circle';
+						break;
+				}
+
+				return <Icon name={iconName} size={34} color={color} />;
+			},
+		})}
+			tabBarOptions={{
+				activeTintColor: '#FFF',
+				inactiveTintColor: '#FFF',
+				activeBackgroundColor: '#DE6B35',
+				inactiveBackgroundColor: '#F8773B',
+				showLabel: false,
+			}}
+		>
+			<Tab.Screen name="List" component={ListPage} />
+			<Tab.Screen name="Map" component={Map} />
+			<Tab.Screen name="Post" component={CreatePage} />
+			<Tab.Screen name="Gallery" component={GalleryPage} />
+			<Tab.Screen name="User" component={UserPage} />
+		</Tab.Navigator>
+	);
+}
+
+export default AppTab;
