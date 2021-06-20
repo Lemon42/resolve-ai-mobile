@@ -2,27 +2,28 @@ import React, { useState } from "react";
 import { ScrollView, View, StyleSheet, Text, TouchableOpacity } from "react-native";
 
 // Components
+import PageScrollView from "../../components/PageScrollView";
 import Map from "../../components/Map";
 import Input from "../../components/Input";
+import TextArea from "../../components/TextArea";
 
 function CreateProblem() {
 
 	const [selectLocation, setSelectLocation] = useState({});
 
 	return (
-		<ScrollView style={{ backgroundColor: '#fff', flex: 1 }}>
-			<View style={{ marginHorizontal: 6, flex: 1 }}>
-				<Text style={styles.title}>Denunciar um problema</Text>
+		<PageScrollView>
+			<Text style={styles.title}>Denunciar um problema</Text>
 
-				<Input label="Título:" inLine={true} />
+			<Input label="Título:" inLine={true} />
 
-				<Text style={styles.label}>Localização:</Text>
-				<View style={styles.mapContainer}>
-					<Map borderRadius={7} setSelectLocation={setSelectLocation} />
-				</View>
-				<Text>-- {JSON.stringify(selectLocation)}</Text>
+			<Text style={styles.label}>Localização:</Text>
+			<View style={styles.mapContainer}>
+				<Map borderRadius={7} setSelectLocation={setSelectLocation} />
 			</View>
-		</ScrollView>
+				
+			<TextArea label="Descrição:" placeholder="Digite uma descrição para o problema" />
+		</PageScrollView>
 	);
 }
 
@@ -31,6 +32,7 @@ const styles = StyleSheet.create({
 		color: "#F8773B",
 		fontFamily: "Poppins Bold",
 		fontSize: 19,
+		marginBottom: 10,
 	},
 	label: {
 		color: "#F8773B",
@@ -40,6 +42,7 @@ const styles = StyleSheet.create({
 	mapContainer: {
 		height: 300,
 		marginTop: 4,
+		marginBottom: 20,
 	},
 })
 
