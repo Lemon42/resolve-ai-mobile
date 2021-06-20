@@ -1,33 +1,26 @@
-import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Text, View, StyleSheet } from 'react-native';
+import React from "react";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Text, View } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 
 // Pages
-import Map from '../pages/Map';
-import CreateProblem from '../pages/CreateProblem';
+import Map from "../pages/Map";
+import CreateProblem from "../pages/CreateProblem";
+import UserPage from "../pages/User";
 
-// Telas de teste
-function GalleryPage() {
-	return (
-		<View>
-			<Text>Galeria</Text>
-		</View>
-	);
-}
+	// Telas de teste
+	function GalleryPage() {
+		return (
+			<View>
+				<Text>Galeria</Text>
+			</View>
+		);
+	}
 
 function ListPage() {
 	return (
 		<View>
 			<Text>Lista</Text>
-		</View>
-	);
-}
-
-function UserPage() {
-	return (
-		<View>
-			<Text>usuário</Text>
 		</View>
 	);
 }
@@ -62,14 +55,14 @@ function AppTab() {
 						break;
 				}
 
-				return <Icon name={iconName} size={34} color={color} />;
+				return <Icon name={iconName} size={31} color={color} />;
 			},
 		})}
 			tabBarOptions={{
-				activeTintColor: '#FFF',
-				inactiveTintColor: '#FFF',
-				activeBackgroundColor: '#DE6B35',
-				inactiveBackgroundColor: '#F8773B',
+				activeTintColor: "#FFF",
+				inactiveTintColor: "#FFF",
+				activeBackgroundColor: "#DE6B35",
+				inactiveBackgroundColor: "#F8773B",
 				showLabel: false,
 			}}
 		>
