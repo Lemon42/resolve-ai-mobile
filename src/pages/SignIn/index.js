@@ -13,6 +13,7 @@ import {
 // Components
 import Input from "../../components/Input";
 import PassInput from "../../components/PassInput";
+import LockPage from "../../components/LockPage";
 
 // Styles
 import buttonStyle from "../../styles/button";
@@ -23,7 +24,7 @@ import { useAccount } from "../../contexts/AccountContext";
 function SignIn({ navigation }) {
 	const { singIn } = useAccount();
 
-	const [passIsVisible, setPassIsVisible] = useState(true);
+	const [isLocked, setLocked] = useState(false);
 	const [form, setForm] = useState({
 		email: "",
 		pass: "",
@@ -33,17 +34,22 @@ function SignIn({ navigation }) {
 
 	async function sendForm() {
 		setSendMessage("");
+		setLocked(true);
+
 		const response = await singIn(form.email, form.pass);
+
+		setLocked(false);
 		setSendMessage(response);
 	}
 
 	return (
 		<SafeAreaView style={styles.container}>
+			<LockPage isLocked={isLocked} />
 			<ScrollView
 				contentContainerStyle={dimensions.height > 961 ? { flex: 1 } : {}}
 			>
 				<View style={styles.topContainer}>
-					<Text style={styles.title}>Bem-vindo de volta!{}</Text>
+					<Text style={styles.title}>Bem-vindo de volta!{ }</Text>
 					<Input
 						label="Email:"
 						type="email-address"
@@ -53,7 +59,7 @@ function SignIn({ navigation }) {
 						label="Senha:"
 						onChangeText={(value) => setForm({ ...form, pass: value })}
 					/>
-					<View style={{marginLeft: 7, marginBottom: 5}}>
+					<View style={{ marginLeft: 7, marginBottom: 5 }}>
 						<Text style={styles.alertMessage}>{sendMessage}</Text>
 					</View>
 					<View>
@@ -69,6 +75,7 @@ function SignIn({ navigation }) {
 					>
 						<Text style={styles.backButton}>
 							Não tem uma conta?
+							<Text>{" "}</Text>
 							<Text style={{ fontFamily: "Poppins Bold" }}>
 								Cadastre.
 							</Text>

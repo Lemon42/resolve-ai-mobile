@@ -17,6 +17,7 @@ import Input from "../../components/Input";
 import SelectInput from "../../components/SelectInput";
 import PassInput from "../../components/PassInput";
 import ImageInput from "../../components/ImageInput";
+import LockPage from "../../components/LockPage";
 
 // Assets
 import Figure from "../../assets/svgs/figure1.svg";
@@ -30,6 +31,7 @@ import { useAccount } from "../../contexts/AccountContext";
 function CreateAccount({ navigation }) {
 	const { singIn } = useAccount();
 
+	const [isLocked, setLocked] = useState(false);
 	const [form, setForm] = useState({
 		name: "",
 		email: "",
@@ -65,6 +67,8 @@ function CreateAccount({ navigation }) {
 	}
 
 	async function sendForm() {
+		setLocked(true);
+
 		let created = true;
 		var formData = new FormData();
 
@@ -107,10 +111,13 @@ function CreateAccount({ navigation }) {
 			const response = await singIn(form.email, form.pass);
 			setMessage(response);
 		}
+
+		setLocked(false);
 	}
 
 	return (
 		<SafeAreaView>
+			<LockPage isLocked={isLocked} />
 			<ScrollView>
 				<View style={styles.container}>
 					<View style={{ display: "flex", width: "100%", marginLeft: 35 }}>
