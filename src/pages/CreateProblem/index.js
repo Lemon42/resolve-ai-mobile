@@ -15,7 +15,7 @@ function CreateProblem() {
 		<PageScrollView>
 			<Text style={styles.title}>Denunciar um problema</Text>
 
-			<Input label="Título:" inLine={true} />
+			<Input label="Título:" inLine={true} placeholder="De um título para o problema" />
 
 			<Text style={styles.label}>Localização:</Text>
 			<View style={styles.mapContainer}>

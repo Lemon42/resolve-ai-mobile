@@ -57,6 +57,7 @@ function Input(props) {
 				color: "#2B2B2B",
 				fontFamily: "Poppins",
 				fontSize: 15,
+				paddingBottom: -7,
 			},
 		});
 	}
@@ -68,6 +69,8 @@ function Input(props) {
 				style={styles.input}
 				keyboardType={props.type || "default"}
 				onChangeText={props.onChangeText}
+				placeholder={props.placeholder || ""}
+				placeholderTextColor="#999"
 			/>
 		</View>
 	);
