@@ -38,15 +38,21 @@ const style = StyleSheet.create({
 		fontFamily: "Poppins Bold",
 		color: "#F53455",
 	},
-	imagesContainer: {
-		width: "100%",
-		display: "flex",
-		flexDirection: "row",
-		justifyContent: "center",
-		alignItems: "center",
+	flatListContainer: {
+		flexBasis: 0,
+		padding: 5,
+		paddingBottom: 15,
 
-		backgroundColor: "yellow"
+		borderWidth: 2.5,
+		borderColor: "#F8773B",
+		borderRadius: 11,
 	},
+	flatListContent:{
+		flexGrow: 1,
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center"
+	}
 });
 
 export default style;

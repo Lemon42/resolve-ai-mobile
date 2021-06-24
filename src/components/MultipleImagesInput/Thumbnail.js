@@ -7,10 +7,10 @@ import styles from "./styles/thumbnail";
 
 function Thumbnail(props) {
 
-	function removeImage(){
+	function removeImage() {
 		const newArray = [];
-		for(let i = 0; i < props.images.length; i++) {
-			if(i != props.index){
+		for (let i = 0; i < props.images.length; i++) {
+			if (i != props.index) {
 				newArray.push(props.images[i]);
 			}
 		}
@@ -20,18 +20,19 @@ function Thumbnail(props) {
 
 	return (
 		<View style={styles.container} key={props.index}>
-			<Image
-				source={{ uri: `data:${props.image.mime};base64,${props.image.data}` }}
-				style={styles.image}
-			/>
-
-			<TouchableOpacity onPress={() => removeImage()} style={styles.removeImageButton}>
-				<Icon
-					name={"trash"}
-					color="#fff"
-					size={13}
+			<View style={styles.wrapper}>
+				<Image
+					source={{ uri: `data:${props.image.mime};base64,${props.image.data}` }}
+					style={styles.image}
 				/>
-			</TouchableOpacity>
+				<TouchableOpacity onPress={() => removeImage()} style={styles.removeImageButton}>
+					<Icon
+						name={"trash"}
+						color="#fff"
+						size={13}
+					/>
+				</TouchableOpacity>
+			</View>
 		</View>
 	);
 }

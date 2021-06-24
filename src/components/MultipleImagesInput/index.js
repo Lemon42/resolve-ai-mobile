@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, TouchableOpacity, Text, FlatList } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, TouchableOpacity, Text, FlatList, SafeAreaView, LogBox } from "react-native";
 
 import ImagePicker from "react-native-image-crop-picker";
 import Icon from "react-native-vector-icons/FontAwesome5";
@@ -33,14 +33,18 @@ function MultipleImagesInput(props) {
 		});
 	}
 
-	const CarouselCardItem = (image, index) => (
+	const GenerateThumbnail = (image, index) => (
 		<Thumbnail
 			image={image} index={index}
 			images={props.images} setImages={props.setImages}
 		/>
 	);
 
-	const _keyExtractor = (item, index) => String(index);
+	const keyExtractor = (item, index) => String(index);
+
+	useEffect(() => {
+		LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+	}, []);
 
 	return (
 		<View style={{ marginTop: 15 }}>
@@ -59,28 +63,21 @@ function MultipleImagesInput(props) {
 						}
 					</View>
 				) : ( // Com imagens
-					<View>
-						<FlatList 
+					<SafeAreaView style={{flex: 1 }}>
+						<FlatList
 							data={props.images}
-							renderItem={({ item, index }) => CarouselCardItem(item, index)}
-							keyExtractor={_keyExtractor}
-							nestedScrollEnabled
-							numColumns={2}
+							renderItem={({ item, index }) => GenerateThumbnail(item, index)}
+							keyExtractor={keyExtractor}
+
+							contentContainerStyle={styles.flatListContent}
+							style={styles.flatListContainer}
+							numColumns={3}
 						/>
-						{/* <View>
-							{
-								props.images.map((image, index) =>
-									(<Thumbnail
-										image={image} index={index} 
-										images={props.images} setImages={props.setImages} 
-									/>)
-								)
-							}
-						</View> */}
+
 						<TouchableOpacity onPress={() => props.setImages([])} style={styles.clearImagesButton}>
 							<Text style={styles.clearImagesText}>Remover todas as imagens</Text>
 						</TouchableOpacity>
-					</View>
+					</SafeAreaView>
 				)
 			}
 		</View>

@@ -1,13 +1,19 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
+
+const dimensions = Dimensions.get("window");
 
 const style = StyleSheet.create({
 	container: {
-		width: 120,
-		height: 90,
+		width: 80,
+		height: 80,
+		flexGrow: 0,
+		margin: 5,
+		marginTop: 15,
+	},
+	wrapper: {
 		display: "flex",
+		flexDirection: "column",
 		alignItems: "flex-end",
-		
-		marginTop: 8,
 	},
 	removeImageButton: {
 		display: "flex",
@@ -24,8 +30,8 @@ const style = StyleSheet.create({
 		borderRadius: 900,
 	},
 	image: {
-		width: 112,
-		height: 82,
+		width: 80,
+		height: 80,
 		borderRadius: 11,
 		position: "absolute",
 	},

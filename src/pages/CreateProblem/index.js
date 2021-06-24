@@ -17,14 +17,14 @@ function CreateProblem() {
 		<PageScrollView>
 			<Text style={styles.title}>Denunciar um problema</Text>
 
-			{/* <Input label="Título:" inLine={true} placeholder="De um título para o problema" />
+			<Input label="Título:" inLine={true} placeholder="De um título para o problema" />
 
 			<Text style={styles.label}>Localização:</Text>
 			<View style={styles.mapContainer}>
 				<Map borderRadius={7} setSelectLocation={setSelectLocation} />
 			</View>
 				
-			<TextArea label="Descrição:" placeholder="Digite uma descrição para o problema" /> */}
+			<TextArea label="Descrição:" placeholder="Digite uma descrição para o problema" />
 
 			<Text style={styles.label}>Imagens:</Text>
 			<MultipleImagesInput images={images} setImages={setImages} />
