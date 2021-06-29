@@ -7,8 +7,6 @@ import styles from "./styles/thumbnail";
 
 function Thumbnail(props) {
 
-	console.log(props.image)
-
 	function removeImage() {
 		const newArray = [];
 		for (let i = 0; i < props.images.length; i++) {
