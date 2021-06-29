@@ -124,7 +124,7 @@ function CreateAccount({ navigation }) {
 						<TouchableOpacity onPress={() => navigation.goBack()}>
 							<Icon
 								name={"long-arrow-alt-left"}
-								color="#D6D6D6"
+								color="#ABABAB"
 								size={35}
 							/>
 						</TouchableOpacity>

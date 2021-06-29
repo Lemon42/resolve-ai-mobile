@@ -14,6 +14,7 @@ import {
 import Input from "../../components/Input";
 import PassInput from "../../components/PassInput";
 import LockPage from "../../components/LockPage";
+import Icon from "react-native-vector-icons/FontAwesome5";
 
 // Styles
 import buttonStyle from "../../styles/button";
@@ -104,6 +105,8 @@ const styles = StyleSheet.create({
 	},
 	topContainer: {
 		width: "100%",
+		paddingTop: 0,
+		paddingBottom: 22,
 		paddingHorizontal: 22,
 	},
 	title: {
@@ -132,7 +135,7 @@ const styles = StyleSheet.create({
 		alignSelf: "flex-end",
 		alignItems: "flex-end",
 		justifyContent: "flex-end",
-		marginTop: 25,
+		marginTop: 5,
 	},
 });
 
