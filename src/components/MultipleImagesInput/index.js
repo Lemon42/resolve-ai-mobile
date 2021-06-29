@@ -20,7 +20,6 @@ function MultipleImagesInput(props) {
 			multiple: true,
 			mediaType: "photo",
 			maxFiles: 5,
-			includeBase64: true,
 		}).then(images => {
 			if (images.length > 5) {
 				setError(true);

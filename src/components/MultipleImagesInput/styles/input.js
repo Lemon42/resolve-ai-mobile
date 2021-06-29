@@ -17,7 +17,7 @@ const style = StyleSheet.create({
 		width: "100%",
 		fontFamily: "Poppins Bold",
 		color: "#F53455",
-		textAlign: "right",
+		textAlign: "center",
 		marginTop: 8,
 		marginRight: 8,
 	},

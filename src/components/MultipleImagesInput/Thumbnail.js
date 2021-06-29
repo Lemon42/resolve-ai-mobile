@@ -7,6 +7,8 @@ import styles from "./styles/thumbnail";
 
 function Thumbnail(props) {
 
+	console.log(props.image)
+
 	function removeImage() {
 		const newArray = [];
 		for (let i = 0; i < props.images.length; i++) {
@@ -22,7 +24,7 @@ function Thumbnail(props) {
 		<View style={styles.container} key={props.index}>
 			<View style={styles.wrapper}>
 				<Image
-					source={{ uri: `data:${props.image.mime};base64,${props.image.data}` }}
+					source={{ uri: props.image.path }}
 					style={styles.image}
 				/>
 				<TouchableOpacity onPress={() => removeImage()} style={styles.removeImageButton}>
