@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Platform } from "react-native";
 
 import MapView from "react-native-maps";
-navigator.geolocation = require("@react-native-community/geolocation");
+import Geolocation from "react-native-geolocation-service";
 
 export default class Map extends Component {
 	state = { region: null };
@@ -16,25 +16,27 @@ export default class Map extends Component {
 	}
 
 	async componentDidMount() {
-		navigator.geolocation.getCurrentPosition(
-			async ({ coords: { latitude, longitude } }) => {
-				this.setState({
-					region: {
-						latitude,
-						longitude,
-						latitudeDelta: 0.0143,
-						longitudeDelta: 0.0134
-					}
-				});
-			}, //sucesso
+		if (Platform.OS === 'ios') {
+			Geolocation.requestAuthorization('always');
+		}
+
+		Geolocation.getCurrentPosition(
+			(position) => {
+			  let {latitude, longitude} = position.coords;
+
+			  this.setState({
+				region: {
+					latitude,
+					longitude,
+					latitudeDelta: 0.0143,
+					longitudeDelta: 0.0134
+				}
+			});
+			},
 			(error) => {
-				error = JSON.stringify(error)
-				console.log('-->' + error);
-			}, //erro
-			{
-				timeout: 2000,
-				enableHighAccuracy: true
-			}
+			  console.log(error.code, error.message);
+			},
+			{ enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
 		);
 	}
 
