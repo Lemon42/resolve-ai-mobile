@@ -89,7 +89,6 @@ function CreateAccount({ navigation }) {
 			formData.append(item, form[item]);
 		});
 
-		formData.append("lastName", "oiiiii");
 		await axios
 			.post(`${API_URL}/create-user`, formData, {
 				headers: {

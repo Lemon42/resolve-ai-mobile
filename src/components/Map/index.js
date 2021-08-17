@@ -17,26 +17,26 @@ export default class Map extends Component {
 
 	async componentDidMount() {
 		if (Platform.OS === 'ios') {
-			Geolocation.requestAuthorization('always');
+			Geolocation.requestAuthorization("always");
 		}
 
 		Geolocation.getCurrentPosition(
 			(position) => {
-			  let {latitude, longitude} = position.coords;
+				let { latitude, longitude } = position.coords;
 
-			  this.setState({
-				region: {
-					latitude,
-					longitude,
-					latitudeDelta: 0.0143,
-					longitudeDelta: 0.0134
-				}
-			});
+				this.setState({
+					region: {
+						latitude,
+						longitude,
+						latitudeDelta: 0.0143,
+						longitudeDelta: 0.0134
+					}
+				});
 			},
 			(error) => {
-			  console.log(error.code, error.message);
+				console.log(error.code, error.message);
 			},
-			{ enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+			{ enableHighAccuracy: true, timeout: 2000 }
 		);
 	}
 
@@ -55,7 +55,7 @@ export default class Map extends Component {
 				<View style={{ flex: 1, overflow: 'hidden', borderRadius: this.props.borderRadius || 0 }}>
 					<MapView
 						style={{ flex: 1 }}
-						region={this.state.region}
+						initialRegion={this.state.region}
 						showsUserLocation
 						loadingEnabled
 
@@ -109,4 +109,8 @@ const styles = StyleSheet.create({
 		fontFamily: "Poppins Bold",
 		color: "#F53455",
 	},
+	allPageMap: {
+		top: 0,
+		position: "absolute",
+	}
 })
