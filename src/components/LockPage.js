@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
 		position: "absolute",
 		width: "100%",
 		height: "100%",
-		backgroundColor: "rgba(100,100,100, 0.6)",
+		backgroundColor: "rgba(229, 229, 229, 0.8)",
 		
 		display: "flex",
 		justifyContent: "center",
