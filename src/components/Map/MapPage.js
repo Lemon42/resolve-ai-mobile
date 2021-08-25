@@ -13,7 +13,7 @@ function Map(props) {
 		{ name: "Jundiaí", lat: -23.1861268, lon: -46.8861839, },
 		{ name: "Vinhedo", lat: -23.0259772, lon: -46.9825881 },
 		{ name: "Várzea Paulista", lat: -23.2128808, lon: -46.829298 },
-		{ name: "Campo Limpo Paulista", lat: -23.209516, lon: -46.7822868,},
+		{ name: "Campo Limpo Paulista", lat: -23.209516, lon: -46.7822868, },
 		{ name: "Louveira", lat: -23.0879492, lon: -46.9502437 },
 		{ name: "Cabreúva", lat: -23.3095099, lon: -47.1352511 },
 	];
@@ -22,13 +22,14 @@ function Map(props) {
 
 	const { account } = useAccount();
 	const [region, setRegion] = useState({
-		// latitude: -23.1114488,
-		// longitude: -46.9250382,
-		// latitudeDelta: 0.0143,
-		// longitudeDelta: 0.0134
+		latitude: -23.1385179,
+		longitude: -46.9524092,
+		latitudeDelta: 0.0113,
+		longitudeDelta: 0.0114
 	}
 	);
 
+	// Sabendo a localização inicial do usuário
 	useEffect(() => {
 		if (Platform.OS === 'ios') {
 			Geolocation.requestAuthorization("always");
@@ -58,7 +59,7 @@ function Map(props) {
 				await axios.get(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`)
 					.then((response) => {
 						const responseCity = (response.data?.address?.city || response.data?.address?.city_district) ?? '';
-						options = { ...options, headers: { city: responseCity, ...options.headers } };
+						options = { ...options, url: `${API_URL}/list-problems/${responseCity}` };
 					})
 					.catch((error) => {
 						console.log(error);
@@ -66,6 +67,7 @@ function Map(props) {
 
 				axios.request(options)
 					.then((response) => {
+						console.log(response);
 						setProblems(response.data);
 					})
 					.catch((error) => {
@@ -83,9 +85,24 @@ function Map(props) {
 
 	// Caso o usuário selecionar outra cidade
 	useEffect(() => {
-		if(props.city){
+		if (props.city) {
 			cityLocations.forEach(city => {
-				if (city.name == props.city){
+				if (city.name == props.city) {
+					const options = {
+						headers: {
+							email: account.email,
+							token: account.token,
+						}
+					};
+
+					axios.get(`${API_URL}/list-problems/${city.name}`, options)
+						.then((response) => {
+							setProblems(response.data);
+						})
+						.catch((error) => {
+							console.log(error);
+						})
+
 					setRegion({
 						latitude: city.lat,
 						longitude: city.lon,
@@ -102,7 +119,7 @@ function Map(props) {
 			<View style={{ flex: 1, overflow: 'hidden' }}>
 				<MapView
 					style={{ flex: 1 }}
-					//initialRegion={region}
+					initialRegion={region}
 					showsUserLocation
 					loadingEnabled
 
