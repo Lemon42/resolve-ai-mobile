@@ -63,6 +63,11 @@ const styles = StyleSheet.create({
 
 		borderRadius: 15,
 		backgroundColor: "white",
+
+		shadowOffset: { width: 5, height: 5, },
+		shadowColor: 'black',
+		shadowOpacity: 1.0,
+		elevation: 2,
 	},
 	title: {
 		fontFamily: "Poppins Bold",
