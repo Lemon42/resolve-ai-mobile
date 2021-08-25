@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 
 import Maps from "../../components/Map/MapPage";
-import ProblemMenu from "../../components/ProblemMenu";
+import ProblemMenu from "./components/ProblemMenu";
 import SelectInput from "../../components/SelectInput";
 
 function Map() {
@@ -34,7 +34,9 @@ function Map() {
 						{ label: "Louveira", value: "Louveira" },
 						{ label: "Cabreúva", value: "Cabreúva" },
 					]}
-					placeholder="Mude de cidade aqui"
+					placeholder="Altere a cidade aqui"
+
+					notForm
 				/>
 			</View>
 		</View>

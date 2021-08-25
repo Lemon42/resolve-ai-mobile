@@ -36,9 +36,21 @@ function SelectInput(props) {
 			alignItems: "center",
 			justifyContent: "center",
 			height: "89%",
-			right: 4, // antes era 8
-		 },
+			right: 8,
+		},
 	});
+
+	if(props.notForm){
+		style.wrapper = {
+			...style.wrapper, 
+			shadowOffset: { width: 10, height: 10, },
+			shadowColor: 'black',
+			shadowOpacity: 1.0,
+			elevation: 4,
+		}
+
+		style.iconContainer = {...style.iconContainer, right: 4}
+	}
 
 	return (
 		<View style={containerStyle.container}>
@@ -56,7 +68,7 @@ function SelectInput(props) {
 						value: null,
 					}}
 					style={style}
-					
+
 					Icon={() => {
 						return (
 							<Icon
@@ -78,6 +90,10 @@ const containerStyle = StyleSheet.create({
 		width: "100%",
 		flexDirection: "column",
 		marginBottom: 22,
+
+		shadowOffset: { width: 10, height: 10, },
+		shadowColor: 'black',
+		shadowOpacity: 1.0,
 	},
 	label: {
 		color: "#F8773B",
