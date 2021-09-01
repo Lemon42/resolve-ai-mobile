@@ -4,6 +4,7 @@ import { Text, View } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 
 // Pages
+import ListPage from "../pages/List";
 import Map from "../pages/Map";
 import CreateProblem from "../pages/CreateProblem";
 import UserPage from "../pages/User";
@@ -16,14 +17,6 @@ import UserPage from "../pages/User";
 			</View>
 		);
 	}
-
-function ListPage() {
-	return (
-		<View>
-			<Text>Lista</Text>
-		</View>
-	);
-}
 // fim das paginas de teste
 
 const Tab = createBottomTabNavigator();
