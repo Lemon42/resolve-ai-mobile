@@ -22,7 +22,8 @@ function Map() {
 
 			<View style={styles.container}>
 				<SelectInput
-					setValue={(value) => {setCity(value)}}
+					setValue={(value) => setCity(value)}
+					
 					items={[
 						{ label: "Jundiaí", value: "Jundiaí" },
 						{ label: "Vinhedo", value: "Vinhedo" },
@@ -36,7 +37,7 @@ function Map() {
 					]}
 					placeholder="Altere a cidade aqui"
 
-					notForm
+					notForm={true}
 				/>
 			</View>
 		</View>

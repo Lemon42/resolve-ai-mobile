@@ -5,18 +5,17 @@ import RNPickerSelect from "react-native-picker-select";
 import Icon from "react-native-vector-icons/FontAwesome5";
 
 function SelectInput(props) {
-
 	const style = StyleSheet.create({
 		wrapper: {
 			height: 48,
 			display: "flex",
 			justifyContent: "center",
 			alignItems: "center",
-	
+
 			borderWidth: 2.5,
 			borderRadius: 30,
 			borderColor: "#F8773B",
-	
+
 			paddingLeft: 2,
 			paddingRight: 15,
 			backgroundColor: "#fff",
@@ -40,21 +39,21 @@ function SelectInput(props) {
 		},
 	});
 
-	if(props.notForm){
+	if (props.notForm) {
 		style.wrapper = {
-			...style.wrapper, 
+			...style.wrapper,
 			shadowOffset: { width: 10, height: 10, },
 			shadowColor: 'black',
 			shadowOpacity: 1.0,
 			elevation: 4,
 		}
 
-		style.iconContainer = {...style.iconContainer, right: 4}
+		style.iconContainer = { ...style.iconContainer, right: 4 }
 	}
 
 	return (
 		<View style={containerStyle.container}>
-			<Text style={containerStyle.label}>{props.label}</Text>
+			<Text style={containerStyle.label}>{props.label || ''}</Text>
 
 			<View style={style.wrapper}>
 				<RNPickerSelect
@@ -63,7 +62,7 @@ function SelectInput(props) {
 
 					useNativeAndroidPickerStyle={true}
 					placeholder={{
-						label: props.placeholder,
+						label: props.placeholder || 'Selecione um valor aqui',
 						color: "#919191",
 						value: null,
 					}}
@@ -80,6 +79,22 @@ function SelectInput(props) {
 					}}
 				/>
 			</View>
+
+			{/* 
+				+ Resolução de bug que ocasiona o fechamento inesperado do aplicativo +
+				(ao que parece a biblioteca RNPickerSelect gera conflito com o React Navigation)
+				NÃO REMOVA O CAMPO DE TEXTO VAZIO
+			 */}
+			<Text
+				style={{
+					width: '100%',
+					height: '100%',
+					position: 'absolute',
+					bottom: 0,
+					left: 0,
+				}}>
+				{' '}
+			</Text>
 		</View>
 	);
 }
