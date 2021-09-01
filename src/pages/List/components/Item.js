@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { SliderBox } from "react-native-image-slider-box";
 
+import Button from "./Button";
 
 function Item(props) {
 	const images = [
@@ -15,21 +16,33 @@ function Item(props) {
 			{/* Título */}
 			<View style={styles.titleContainer}>
 				<Text style={styles.title}>Buraco na rua</Text>
-				<Text style={styles.city}>● Jundiaí</Text>
+				<Text style={styles.city}>- Jundiaí</Text>
 			</View>
 
 			{/* Imagens */}
-			<SliderBox 
+			<SliderBox
 				images={images}
-				
+
 				dotColor="#F8773B"
 				imageLoadingColor="#F8773B"
 				sliderBoxHeight={230}
 			/>
 
 			{/* Menu */}
+			<View style={styles.menuContainer}>
+				<Button icon="arrow-up" />
+				<Button icon="arrow-down" />
+				<Button icon="message-circle" />
+				<Button icon="share" />
+			</View>
 
-			{/* Descrição */}
+			{/* Descrição ({problem.data.Description || 'Sem descrição.'}) */}
+			<Text style={styles.description} numberOfLines={2} ellipsizeMode="tail">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam iaculis placerat massa ut porta.
+				Ut quis viverra orci. Nunc eros tellus, ornare eget felis eu, bibendum efficitur mauris.
+			</Text>
+
+			<View style={styles.line} />
 		</View>
 	);
 }
@@ -40,22 +53,44 @@ const styles = StyleSheet.create({
 	},
 	titleContainer: {
 		display: "flex",
+		width: "100%",
 		alignItems: "center",
 		flexDirection: "row",
-		marginHorizontal: 4,
+		marginHorizontal: 8,
 		marginBottom: 7,
 	},
 	title: {
 		fontFamily: "Poppins Bold",
-		fontSize: 18,
+		fontSize: 19,
+		letterSpacing: 1.5,
 		color: "#1A1A1A",
 	},
 	city: {
 		fontFamily: "Poppins",
 		color: "#ABABAB",
-		fontSize: 15,
+		fontSize: 16,
 		marginLeft: 4,
-	}
+	},
+	menuContainer: {
+		marginTop: 10,
+		display: "flex",
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "space-around",
+	},
+	description: {
+		textAlign: "justify",
+		color: "#1A1A1A",
+		fontSize: 12.5,
+		marginHorizontal: 12,
+		marginTop: 10,
+	},
+	line: {
+		marginTop: 10,
+		borderBottomWidth: 1,
+		borderBottomColor: "#ABABAB",
+		marginHorizontal: 8,
+	},
 })
 
 export default Item;
