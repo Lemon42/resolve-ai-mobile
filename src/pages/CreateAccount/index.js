@@ -215,6 +215,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "space-between",
 		marginTop: 8,
+		backgroundColor: "#fff",
 	},
 	wrapper: {
 		width: "100%",

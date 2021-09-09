@@ -84,7 +84,7 @@ function CreateProblem() {
 	}
 
 	return (
-		<PageScrollView>
+		<PageScrollView style={{ paddingHorizontal: 8 }}>
 			<LockPage isLocked={isLocked} />
 			<Text style={styles.title}>Denunciar um problema</Text>
 

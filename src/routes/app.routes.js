@@ -9,14 +9,14 @@ import Map from "../pages/Map";
 import CreateProblem from "../pages/CreateProblem";
 import UserPage from "../pages/User";
 
-	// Telas de teste
-	function GalleryPage() {
-		return (
-			<View>
-				<Text>Galeria</Text>
-			</View>
-		);
-	}
+// Telas de teste
+function GalleryPage() {
+	return (
+		<View>
+			<Text>Galeria</Text>
+		</View>
+	);
+}
 // fim das paginas de teste
 
 const Tab = createBottomTabNavigator();
@@ -43,9 +43,6 @@ function AppTab() {
 					case 'User':
 						iconName = 'user';
 						break;
-					default:
-						iconName = 'circle';
-						break;
 				}
 
 				return <Icon name={iconName} size={31} color={color} />;
@@ -58,6 +55,8 @@ function AppTab() {
 				inactiveBackgroundColor: "#F8773B",
 				showLabel: false,
 			}}
+
+			initialRouteName="Map"
 		>
 			<Tab.Screen name="List" component={ListPage} />
 			<Tab.Screen name="Map" component={Map} />
