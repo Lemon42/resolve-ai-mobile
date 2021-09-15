@@ -67,7 +67,6 @@ function Map(props) {
 
 				axios.request(options)
 					.then((response) => {
-						console.log(response);
 						setProblems(response.data);
 					})
 					.catch((error) => {
