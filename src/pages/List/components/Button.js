@@ -4,7 +4,7 @@ import Icon from "react-native-vector-icons/Feather";
 
 function Button(props){
 	return (
-		<TouchableOpacity>
+		<TouchableOpacity onPress={props.onPress}>
 			<Icon name={props.icon} size={25} />
 		</TouchableOpacity>
 	);

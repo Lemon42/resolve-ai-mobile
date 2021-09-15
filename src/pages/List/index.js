@@ -1,13 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 
+import ScrollView from "../../components/PageScrollView";
 import Item from "./components/Item";
+import Details from "./components/Details";
 
 function ListPage(){
+	const [isVisible, setVisible] = useState(false);
+
 	return(
-		<View style={styles.content}>
-			<Item />
-		</View>
+		<ScrollView>
+			<Item setDataisVisible={setVisible} />
+
+			<Details isVisible={isVisible} hide={setVisible} />
+		</ScrollView>
 	);
 }
 

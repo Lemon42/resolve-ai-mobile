@@ -1,8 +1,9 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { SliderBox } from "react-native-image-slider-box";
-
 import Button from "./Button";
+
+import itemStyle from "../styles/feedItem";
 
 function Item(props) {
 	const images = [
@@ -11,13 +12,17 @@ function Item(props) {
 		"https://midias.gazetaonline.com.br/_midias/jpg/2018/11/12/buraco1-5873723.jpg",
 	];
 
+	function openDatais(){
+		props.setDataisVisible(true);
+	}
+
 	return (
 		<View style={styles.content}>
 			{/* Título */}
-			<View style={styles.titleContainer}>
-				<Text style={styles.title}>Buraco na rua</Text>
-				<Text style={styles.city}>- Jundiaí</Text>
-			</View>
+			<TouchableOpacity style={itemStyle.titleContainer} onPress={openDatais}>
+				<Text style={itemStyle.title}>Buraco na rua</Text>
+				<Text style={itemStyle.city}>Jundiaí</Text>
+			</TouchableOpacity>
 
 			{/* Imagens */}
 			<SliderBox
@@ -29,7 +34,7 @@ function Item(props) {
 			/>
 
 			{/* Menu */}
-			<View style={styles.menuContainer}>
+			<View style={itemStyle.menuContainer}>
 				<Button icon="arrow-up" />
 				<Button icon="arrow-down" />
 				<Button icon="message-circle" />
@@ -37,10 +42,12 @@ function Item(props) {
 			</View>
 
 			{/* Descrição ({problem.data.Description || 'Sem descrição.'}) */}
-			<Text style={styles.description} numberOfLines={2} ellipsizeMode="tail">
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam iaculis placerat massa ut porta.
-				Ut quis viverra orci. Nunc eros tellus, ornare eget felis eu, bibendum efficitur mauris.
-			</Text>
+			<TouchableOpacity onPress={openDatais}>
+				<Text style={itemStyle.description} numberOfLines={2} ellipsizeMode="tail">
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam iaculis placerat massa ut porta.
+					Ut quis viverra orci. Nunc eros tellus, ornare eget felis eu, bibendum efficitur mauris.
+				</Text>
+			</TouchableOpacity>
 
 			<View style={styles.line} />
 		</View>
@@ -50,40 +57,7 @@ function Item(props) {
 const styles = StyleSheet.create({
 	content: {
 		width: "100%",
-	},
-	titleContainer: {
-		display: "flex",
-		width: "100%",
-		alignItems: "center",
-		flexDirection: "row",
-		marginHorizontal: 8,
-		marginBottom: 7,
-	},
-	title: {
-		fontFamily: "Poppins Bold",
-		fontSize: 19,
-		letterSpacing: 1.5,
-		color: "#1A1A1A",
-	},
-	city: {
-		fontFamily: "Poppins",
-		color: "#ABABAB",
-		fontSize: 16,
-		marginLeft: 4,
-	},
-	menuContainer: {
-		marginTop: 10,
-		display: "flex",
-		flexDirection: "row",
-		alignItems: "center",
-		justifyContent: "space-around",
-	},
-	description: {
-		textAlign: "justify",
-		color: "#1A1A1A",
-		fontSize: 12.5,
-		marginHorizontal: 12,
-		marginTop: 10,
+		marginBottom: 20,
 	},
 	line: {
 		marginTop: 10,
