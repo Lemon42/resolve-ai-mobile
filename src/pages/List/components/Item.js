@@ -2,10 +2,13 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { SliderBox } from "react-native-image-slider-box";
 import Button from "./Button";
+import { useDetails } from "../../../contexts/DetailsContext";
 
 import itemStyle from "../styles/feedItem";
 
 function Item(props) {
+	const { setVisible } = useDetails();
+
 	const images = [
 		"https://s2.glbimg.com/BXoCVbSSUMqwk8SrldbMK3pYYbg=/0x0:1280x960/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2018/1/p/JbO1BoTCu5FmmTAWCQvA/cratera-joao-pessoa-bayeux.jpg",
 		"https://www.acritica.com/uploads/news/image/741937/show_buraco.jpeg",
@@ -13,7 +16,7 @@ function Item(props) {
 	];
 
 	function openDatais(){
-		props.setDataisVisible(true);
+		setVisible(true);
 	}
 
 	return (

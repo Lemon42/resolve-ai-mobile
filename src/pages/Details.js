@@ -2,24 +2,31 @@ import React from "react";
 import { Modal, View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { SliderBox } from "react-native-image-slider-box";
 import Icon from "react-native-vector-icons/FontAwesome5";
-import Button from "./Button";
-import share from "../utils/share";
+import Button from "./List/components/Button";
+import share from "./List/utils/share";
+import { useDetails } from "../contexts/DetailsContext";
 
-import itemStyle from "../styles/feedItem";
+import itemStyle from "./List/styles/feedItem";
 
 function Detail(props) {
+	const { setVisible } = useDetails();
+
 	const images = [
 		"https://s2.glbimg.com/BXoCVbSSUMqwk8SrldbMK3pYYbg=/0x0:1280x960/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2018/1/p/JbO1BoTCu5FmmTAWCQvA/cratera-joao-pessoa-bayeux.jpg",
 		"https://www.acritica.com/uploads/news/image/741937/show_buraco.jpeg",
 		"https://midias.gazetaonline.com.br/_midias/jpg/2018/11/12/buraco1-5873723.jpg",
 	];
 
+	function hide(){
+		setVisible(false);
+	}
+
 	return (
-		<Modal visible={props.isVisible} transparent animationType={"slide"} onRequestClose={props.hide}>
+		<Modal visible={props.isVisible} transparent animationType={"slide"} onRequestClose={hide}>
 			<View style={styles.content}>
 				{/* Header */}
 				<View style={styles.header}>
-					<TouchableOpacity style={{ width: "20%" }} onPress={props.hide}>
+					<TouchableOpacity style={{ width: "20%" }} onPress={hide}>
 						<Icon name="caret-left" size={19} color="#1A1A1A" />
 					</TouchableOpacity>
 
