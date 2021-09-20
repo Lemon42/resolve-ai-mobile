@@ -214,7 +214,6 @@ const styles = StyleSheet.create({
 		flexDirection: "column",
 		alignItems: "center",
 		justifyContent: "space-between",
-		marginTop: 8,
 		backgroundColor: "#fff",
 	},
 	wrapper: {
