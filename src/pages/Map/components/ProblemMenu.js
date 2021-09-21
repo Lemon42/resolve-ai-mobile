@@ -1,15 +1,20 @@
 import React from "react";
 import { Modal, View, StyleSheet, Text, TouchableOpacity, Image, Dimensions } from "react-native";
 
-import { IMAGES_URL } from "@env";
+import { useDetails } from "../../../contexts/DetailsContext";
 
 function ProblemMenu(props) {
-
+	const { setVisible, setDetails } = useDetails();
 	let problem = props.problem;
 
 	// Testar se a prop não está vazia, caso estiver ele vai ocasionar um erro ao renderizar o componente
 	function isEmpty(obj) {
 		return Object.keys(obj).length === 0;
+	}
+
+	function openProblem(){
+		setDetails(problem);
+		setVisible(true);
 	}
 
 	if (!isEmpty(problem)) {
@@ -21,12 +26,12 @@ function ProblemMenu(props) {
 
 						{
 							problem.images.length >= 1
-								? (<Image style={styles.image} source={{uri: `${IMAGES_URL}${problem.images[0].name}`}} />)
+								? (<Image style={styles.image} source={{uri: problem.images[0].name}} />)
 								: null
 						}
 						<Text style={styles.description} numberOfLines={3} ellipsizeMode="tail">{problem.data.Description || 'Sem descrição.'}</Text>
 
-						<TouchableOpacity style={styles.moreContainer}>
+						<TouchableOpacity onPress={openProblem} style={styles.moreContainer}>
 							<Text style={styles.more}>Ver mais</Text>
 						</TouchableOpacity>
 					</View>
