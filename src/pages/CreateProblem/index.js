@@ -14,6 +14,7 @@ import MultipleImagesInput from "../../components/MultipleImagesInput";
 
 // Context
 import { useAccount } from "../../contexts/AccountContext";
+import { useDetails } from "../../contexts/DetailsContext";
 
 // Styles
 import button from "../../styles/button";
@@ -21,8 +22,9 @@ import button from "../../styles/button";
 function CreateProblem() {
 
 	const { account } = useAccount();
+	const { setVisible, setDetails } = useDetails();
 
-	const [isLocked, setLocked]= useState(false);
+	const [isLocked, setLocked] = useState(false);
 	const [selectLocation, setSelectLocation] = useState({});
 	const [images, setImages] = useState([]);
 	const [message, setMessage] = useState("");
@@ -67,13 +69,15 @@ function CreateProblem() {
 					"token": account.token,
 				},
 			})
-			.then((response) => {
-				setLocked(false);
-
-				if(response.data.error){
+			.then(async (response) => {
+				if (response.data.error) {
 					setMessage(response.data.error);
-				} else { 
+				} else {
 					setMessage("");
+					setDetails(response.data);
+					setLocked(false);
+					setVisible(true);
+					// Limpar formulario
 				}
 			})
 			.catch(() => {

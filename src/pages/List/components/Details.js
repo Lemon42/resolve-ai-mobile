@@ -2,11 +2,11 @@ import React from "react";
 import { Modal, View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { SliderBox } from "react-native-image-slider-box";
 import Icon from "react-native-vector-icons/FontAwesome5";
-import Button from "./List/components/Button";
-import share from "./List/utils/share";
-import { useDetails } from "../contexts/DetailsContext";
+import Button from "./Button";
+import share from "../utils/share";
+import { useDetails } from "../../../contexts/DetailsContext";
 
-import itemStyle from "./List/styles/feedItem";
+import itemStyle from "../styles/feedItem";
 
 function Detail(props) {
 	const { setVisible } = useDetails();
