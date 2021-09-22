@@ -82,7 +82,6 @@ function Map(props) {
 	}, []);
 
 
-	// Caso o usuário selecionar outra cidade
 	useEffect(() => {
 		if (props.city) {
 			cityLocations.forEach(city => {
@@ -123,6 +122,7 @@ function Map(props) {
 					loadingEnabled
 
 					region={region}
+					onRegionChangeComplete={(newRegion) => setRegion(newRegion)}
 				>
 					{
 						problems.length >= 1 ? (
