@@ -19,8 +19,7 @@ import { useDetails } from "../../contexts/DetailsContext";
 // Styles
 import button from "../../styles/button";
 
-function CreateProblem() {
-
+function CreateProblem({ navigation }) {
 	const { account } = useAccount();
 	const { setVisible, setDetails } = useDetails();
 
@@ -71,20 +70,28 @@ function CreateProblem() {
 			})
 			.then(async (response) => {
 				if (response.data.error) {
+					setLocked(false);
 					setMessage(response.data.error);
 				} else {
 					setMessage("");
 					setDetails(response.data);
-					setLocked(false);
 					setVisible(true);
-					// Limpar formulario
+
+					// Reset do form
+					setForm({
+						title: "",
+						description: "",
+					});
+					setSelectLocation({});
+					setImages([]);
+
+					setLocked(false);
+					navigation.navigate('List');
 				}
 			})
 			.catch(() => {
-				setLocked(false);
 				setMessage("Ops! Tivemos um erro.");
-			})
-
+			});
 	}
 
 	return (
@@ -94,6 +101,7 @@ function CreateProblem() {
 
 			<Input onChangeText={(value) => setForm({ ...form, title: value })}
 				label="Título:" inLine={true} placeholder="De um título para o problema"
+				value={form.title}
 			/>
 
 			<Text style={styles.label}>Localização:</Text>

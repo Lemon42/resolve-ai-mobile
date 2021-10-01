@@ -71,6 +71,8 @@ function Input(props) {
 				onChangeText={props.onChangeText}
 				placeholder={props.placeholder || ""}
 				placeholderTextColor="#999"
+
+				value={props.value}
 			/>
 		</View>
 	);
