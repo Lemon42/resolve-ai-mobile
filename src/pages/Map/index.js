@@ -5,7 +5,7 @@ import Maps from "../../components/Map/MapPage";
 import ProblemMenu from "./components/ProblemMenu";
 import SelectInput from "../../components/SelectInput";
 
-function Map() {
+function Map({ navigation }) {
 	const [problemOnDisplay, setProblemOnDisplay] = useState({});
 	const [problemVisible, setProblemVisible] = useState(false);
 	const [city, setCity] = useState();
@@ -17,7 +17,9 @@ function Map() {
 
 	return (
 		<View style={{ flex: 1 }}>
-			<ProblemMenu visible={problemVisible} setVisible={setProblemVisible} problem={problemOnDisplay || {}} />
+			<ProblemMenu visible={problemVisible} setVisible={setProblemVisible} 
+				problem={problemOnDisplay || {}}
+				navigation={navigation} />
 			<Maps problemOnDisplay={setDisplay} city={city} />
 
 			<View style={styles.container}>

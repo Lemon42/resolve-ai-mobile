@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, View, StyleSheet, Text, TouchableOpacity, Image, Dimensions } from "react-native";
+import { Modal, View, StyleSheet, Text, TouchableOpacity, Button, Image, Dimensions } from "react-native";
 
 import { useDetails } from "../../../contexts/DetailsContext";
 
@@ -12,9 +12,11 @@ function ProblemMenu(props) {
 		return Object.keys(obj).length === 0;
 	}
 
-	function openProblem(){
+	function openProblem() {
 		setDetails(problem);
-		setVisible(true);
+		props.navigation.navigate("List");
+		props.setVisible(false); // Visible desse modal
+		setVisible(true); // Visible do modal de detalhes
 	}
 
 	if (!isEmpty(problem)) {
@@ -23,21 +25,29 @@ function ProblemMenu(props) {
 				<View style={styles.container}>
 					<View style={styles.wrapper}>
 						<Text style={styles.title}>{problem.data.Title || ''}</Text>
+
 						{
 							problem.images.length >= 1
-								? (<Image style={styles.image} source={{uri: problem.images[0]}} />)
+								? (<Image style={styles.image} source={{ uri: problem.images[0] }} />)
 								: null
 						}
-						<Text style={styles.description} numberOfLines={3} ellipsizeMode="tail">{problem.data.Description || 'Sem descrição.'}</Text>
 
-						<TouchableOpacity onPress={openProblem} style={styles.moreContainer}>
-							<Text style={styles.more}>Ver mais</Text>
-						</TouchableOpacity>
+						<Text style={styles.description} numberOfLines={3} ellipsizeMode="tail">
+							{problem.data.Description || 'Sem descrição.'}
+						</Text>
+
+						<View style={styles.moreContainer}>
+							<TouchableOpacity onPress={openProblem} style={styles.button}>
+								<Text style={styles.more}>Ver mais</Text>
+							</TouchableOpacity>
+						</View>
 					</View>
 
-					<TouchableOpacity onPress={() => props.setVisible(false)} style={{ ...styles.wrapper, marginTop: 15 }}>
-						<Text style={styles.close}>Fechar</Text>
-					</TouchableOpacity>
+					<View style={{ ...styles.wrapper, marginTop: 15 }}>
+						<TouchableOpacity onPress={() => props.setVisible(false)} style={styles.button}>
+							<Text style={styles.close}>Fechar</Text>
+						</TouchableOpacity>
+					</View>
 				</View>
 			</Modal>
 		);
@@ -105,6 +115,12 @@ const styles = StyleSheet.create({
 		fontSize: 17,
 		padding: 12,
 		letterSpacing: 1,
+	},
+	button: {
+		width: "100%",
+		display: "flex",
+		alignItems: "center",
+		justifyContent: "center",
 	},
 	image: {
 		marginTop: 15,
