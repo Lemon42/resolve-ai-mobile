@@ -1,71 +1,129 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { SliderBox } from "react-native-image-slider-box";
 import Icon from "react-native-vector-icons/FontAwesome5";
+import axios from "axios";
+
 import Button from "./Button";
 import share from "../utils/share";
 import { useDetails } from "../../../contexts/DetailsContext";
+import MapDetail from "../../../components/Map/MapDetail";
+import PageScrollView from "../../../components/PageScrollView";
 
 import itemStyle from "../styles/feedItem";
 
+import { useAccount } from "../../../contexts/AccountContext";
+import { API_URL } from "@env";
+import style from "../../../styles/button";
+
 function Detail(props) {
-	const { setVisible } = useDetails();
+	const { account } = useAccount();
 
-	const images = [
-		"https://s2.glbimg.com/BXoCVbSSUMqwk8SrldbMK3pYYbg=/0x0:1280x960/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2018/1/p/JbO1BoTCu5FmmTAWCQvA/cratera-joao-pessoa-bayeux.jpg",
-		"https://www.acritica.com/uploads/news/image/741937/show_buraco.jpeg",
-		"https://midias.gazetaonline.com.br/_midias/jpg/2018/11/12/buraco1-5873723.jpg",
-	];
+	const [comments, setComments] = useState([]);
+	const [location, setLocation] = useState({ latitude: -23.1616483, longitude: -46.9271227 });
+	const { details, setVisible } = useDetails();
 
-	function hide(){
+	function hide() {
 		setVisible(false);
 	}
 
+	useEffect(() => {
+		// Passando lat e lon para float
+		setLocation({
+			latitude: parseFloat(details.data.Latitude),
+			longitude: parseFloat(details.data.Longitude)
+		});
+
+		// Pesquisar pelos comentarios
+		const options = {
+			headers: {
+				token: account.token,
+				email: account.email,
+			}
+		};
+
+		if (details.data.ID != "0") {
+			axios.get(`${API_URL}/comment/${details.data.ID}`, options)
+				.then(response => setComments(response.data.comments))
+				.catch(error => console.log(error));
+		}
+	}, [details])
+
 	return (
 		<Modal visible={props.isVisible} transparent animationType={"slide"} onRequestClose={hide}>
-			<View style={styles.content}>
-				{/* Header */}
-				<View style={styles.header}>
-					<TouchableOpacity style={{ width: "20%" }} onPress={hide}>
-						<Icon name="caret-left" size={19} color="#1A1A1A" />
-					</TouchableOpacity>
+			<PageScrollView viewStyle={{ marginTop: 0 }}>
+				<View style={styles.content}>
 
-					<View style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", width: "60%" }}>
-						<Text style={styles.headerTitle}>Problema</Text>
+					{/* Header */}
+					<View style={styles.header}>
+						<TouchableOpacity style={{ width: "20%" }} onPress={hide}>
+							<Icon name="caret-left" size={19} color="#1A1A1A" />
+						</TouchableOpacity>
+
+						<View style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", width: "60%" }}>
+							<Text style={styles.headerTitle}>Problema</Text>
+						</View>
+
+						<Text style={{ width: "20%" }}>{' '}</Text>
 					</View>
 
-					<View style={{ width: "20%" }}></View>
+					{/* Título */}
+					<View style={{ ...itemStyle.titleContainer, marginTop: 20 }}>
+						<Text style={itemStyle.title}>{details.data.Title}</Text>
+						<Text style={{ ...itemStyle.city, marginTop: 0 }}>{details.data.City}</Text>
+					</View>
+
+					{/* Imagens */}
+					{
+						details.images.length != 0 ? (
+							<SliderBox
+								images={details.images}
+
+								dotColor="#F8773B"
+								imageLoadingColor="#F8773B"
+								sliderBoxHeight={270}
+							/>
+						) : (
+							<Text Text style={{ ...itemStyle.description, fontSize: 14, marginTop: -5, marginBottom: 15 }}>
+								{details.data.Description}
+							</Text>
+						)
+					}
+
+					{/* Menu */}
+					<View style={itemStyle.menuContainer}>
+						<Button icon="arrow-up" />
+						<Button icon="arrow-down" />
+						<Button icon="message-circle" />
+						<Button icon="share" onPress={() => share()} />
+					</View>
+
+					{
+						details.images.length != 0 ? (
+							<Text Text style={{ ...itemStyle.description, fontSize: 13 }}>
+								{details.data.Description}
+							</Text>
+						) : null
+					}
+
+					{/* Mapa */}
+					{
+						details?.data?.latitude?.length != 0 ? (
+							<MapDetail location={location} />
+						) : null
+					}
+
+					{/* Comentarios */}
+					<View style={style.commentsContainer}>
+						{/* comentario */}
+						<View>
+							
+						</View>
+
+						{/* comentario do usuario (deve ter a opção de deletar) */}
+					</View>
 				</View>
-
-				{/* Título */}
-				<View style={{ ...itemStyle.titleContainer, marginTop: 20 }}>
-					<Text style={itemStyle.title}>Buraco na rua</Text>
-					<Text style={itemStyle.city}>Jundiaí</Text>
-				</View>
-
-				{/* Imagens */}
-				<SliderBox
-					images={images}
-
-					dotColor="#F8773B"
-					imageLoadingColor="#F8773B"
-					sliderBoxHeight={270}
-				/>
-
-				{/* Menu */}
-				<View style={itemStyle.menuContainer}>
-					<Button icon="arrow-up" />
-					<Button icon="arrow-down" />
-					<Button icon="message-circle" />
-					<Button icon="share" onPress={() => share()} />
-				</View>
-
-				{/* Descrição */}
-				<Text style={{...itemStyle.description, fontSize: 13}}>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam iaculis placerat massa ut porta.
-					Ut quis viverra orci. Nunc eros tellus, ornare eget felis eu, bibendum efficitur mauris.
-				</Text>
-			</View>
+			</PageScrollView>
 		</Modal>
 	);
 }
@@ -89,6 +147,7 @@ const styles = StyleSheet.create({
 		borderBottomWidth: 1,
 		borderColor: "#1A1A1A",
 
+
 		shadowOffset: { width: 10, height: 10 },
 		shadowColor: 'black',
 		shadowOpacity: 1,
@@ -96,8 +155,9 @@ const styles = StyleSheet.create({
 	},
 	headerTitle: {
 		fontFamily: "Poppins Bold",
-		letterSpacing: 0.5,
-		fontSize: 15,
+		letterSpacing: 0.8,
+		fontSize: 17,
+		color: "#F8773B",
 	},
 });
 

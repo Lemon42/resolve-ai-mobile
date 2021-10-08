@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState } from "react";
 const DetailsContext = createContext();
 
 export default function detailsProvider(props) {
-	const [details, setDetails] = useState({});
+	const [details, setDetails] = useState({"data": {"ID": "0", "City": "", "Description": "","Latitude": 0, "Longitude": 0, "Title": ""}, "images": []});
 	const [detailsVisible, setVisible] = useState(false);
 
 	return (

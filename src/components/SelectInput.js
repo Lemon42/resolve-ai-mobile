@@ -45,10 +45,14 @@ function SelectInput(props) {
 			shadowOffset: { width: 10, height: 10, },
 			shadowColor: 'black',
 			shadowOpacity: 1.0,
-			elevation: 4,
+			elevation: 5,
+
+			borderRadius: 2.5,
+			borderWidth: 2,
+			borderColor: 'white'
 		}
 
-		style.iconContainer = { ...style.iconContainer, right: 4 }
+		style.iconContainer = { ...style.iconContainer, right: 0 }
 	}
 
 	return (
@@ -106,9 +110,6 @@ const containerStyle = StyleSheet.create({
 		flexDirection: "column",
 		marginBottom: 22,
 
-		shadowOffset: { width: 10, height: 10, },
-		shadowColor: 'black',
-		shadowOpacity: 1.0,
 	},
 	label: {
 		color: "#F8773B",

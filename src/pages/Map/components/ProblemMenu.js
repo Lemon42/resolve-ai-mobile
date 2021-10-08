@@ -23,10 +23,9 @@ function ProblemMenu(props) {
 				<View style={styles.container}>
 					<View style={styles.wrapper}>
 						<Text style={styles.title}>{problem.data.Title || ''}</Text>
-
 						{
 							problem.images.length >= 1
-								? (<Image style={styles.image} source={{uri: problem.images[0].name}} />)
+								? (<Image style={styles.image} source={{uri: problem.images[0]}} />)
 								: null
 						}
 						<Text style={styles.description} numberOfLines={3} ellipsizeMode="tail">{problem.data.Description || 'Sem descrição.'}</Text>

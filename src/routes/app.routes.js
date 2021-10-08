@@ -49,10 +49,10 @@ function AppTab() {
 			},
 		})}
 			tabBarOptions={{
-				activeTintColor: "#FFF",
-				inactiveTintColor: "#FFF",
-				activeBackgroundColor: "#DE6B35",
-				inactiveBackgroundColor: "#F8773B",
+				activeTintColor: "#fff",
+				inactiveTintColor: "#444747",
+				activeBackgroundColor: "#F8773B",
+				inactiveBackgroundColor: "#FFF",
 				showLabel: false,
 			}}
 
