@@ -9,16 +9,22 @@ import share from "../utils/share";
 import { useDetails } from "../../../contexts/DetailsContext";
 import MapDetail from "../../../components/Map/MapDetail";
 import PageScrollView from "../../../components/PageScrollView";
+import Comment, { CommentsContainer } from "../../../components/Comment";
 
 import itemStyle from "../styles/feedItem";
 
 import { useAccount } from "../../../contexts/AccountContext";
 import { API_URL } from "@env";
-import style from "../../../styles/button";
 
 function Detail(props) {
-	const { account } = useAccount();
+	// Verificando se o componente já está montado
+	const [didMount, setDidMount] = useState(false); 
+	useEffect(() => {
+		setDidMount(true);
+		return () => setDidMount(false);
+	}, []);
 
+	const { account } = useAccount();
 	const [comments, setComments] = useState([]);
 	const [location, setLocation] = useState({ latitude: -23.1616483, longitude: -46.9271227 });
 	const { details, setVisible } = useDetails();
@@ -27,6 +33,7 @@ function Detail(props) {
 		setVisible(false);
 	}
 
+	// Atualizando comentarios e mapa
 	useEffect(() => {
 		// Passando lat e lon para float
 		setLocation({
@@ -48,6 +55,10 @@ function Detail(props) {
 				.catch(error => console.log(error));
 		}
 	}, [details])
+
+	if (!didMount) {
+		return null;
+	}
 
 	return (
 		<Modal visible={props.isVisible} transparent animationType={"slide"} onRequestClose={hide}>
@@ -114,13 +125,12 @@ function Detail(props) {
 					}
 
 					{/* Comentarios */}
-					<View style={style.commentsContainer}>
-						{/* comentario */}
-						<View>
-							
-						</View>
-
-						{/* comentario do usuario (deve ter a opção de deletar) */}
+					<View style={{ width: "100%", ...CommentsContainer }}>
+						{
+							comments.map((comment, i) =>
+								<Comment data={comment} key={i} />
+							)
+						}
 					</View>
 				</View>
 			</PageScrollView>
@@ -131,6 +141,7 @@ function Detail(props) {
 const styles = StyleSheet.create({
 	content: {
 		flex: 1,
+		width: "100%",
 		backgroundColor: "#fff",
 	},
 	header: {
