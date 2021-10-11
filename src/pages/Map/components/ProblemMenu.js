@@ -19,41 +19,42 @@ function ProblemMenu(props) {
 		setVisible(true); // Visible do modal de detalhes
 	}
 
-	if (!isEmpty(problem)) {
-		return (
-			<Modal visible={props.visible} animationType={"slide"} transparent>
-				<View style={styles.container}>
-					<View style={styles.wrapper}>
-						<Text style={styles.title}>{problem.data.Title || ''}</Text>
+	if (isEmpty(problem)) {
+		return null;
+	}
 
-						{
-							problem.images.length >= 1
-								? (<Image style={styles.image} source={{ uri: problem.images[0] }} />)
-								: null
-						}
+	return (
+		<Modal visible={props.visible} animationType={"slide"} transparent>
+			<View style={styles.container}>
+				<View style={styles.wrapper}>
+					<Text style={styles.title}>{problem.data.Title || ''}</Text>
 
-						<Text style={styles.description} numberOfLines={3} ellipsizeMode="tail">
-							{problem.data.Description || 'Sem descrição.'}
-						</Text>
+					{
+						problem.images.length >= 1
+							? (<Image style={styles.image} source={{ uri: problem.images[0] }} />)
+							: null
+					}
 
-						<View style={styles.moreContainer}>
-							<TouchableOpacity onPress={openProblem} style={styles.button}>
-								<Text style={styles.more}>Ver mais</Text>
-							</TouchableOpacity>
-						</View>
-					</View>
+					<Text style={styles.description} numberOfLines={3} ellipsizeMode="tail">
+						{problem.data.Description || 'Sem descrição.'}
+					</Text>
 
-					<View style={{ ...styles.wrapper, marginTop: 15 }}>
-						<TouchableOpacity onPress={() => props.setVisible(false)} style={styles.button}>
-							<Text style={styles.close}>Fechar</Text>
+					<View style={styles.moreContainer}>
+						<TouchableOpacity onPress={openProblem} style={styles.button}>
+							<Text style={styles.more}>Ver mais</Text>
 						</TouchableOpacity>
 					</View>
 				</View>
-			</Modal>
-		);
-	} else {
-		return null;
-	}
+
+				<View style={{ ...styles.wrapper, marginTop: 15 }}>
+					<TouchableOpacity onPress={() => props.setVisible(false)} style={styles.button}>
+						<Text style={styles.close}>Fechar</Text>
+					</TouchableOpacity>
+				</View>
+			</View>
+		</Modal>
+	);
+
 }
 
 const styles = StyleSheet.create({
