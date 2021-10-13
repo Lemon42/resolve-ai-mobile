@@ -28,13 +28,15 @@ function Detail(props) {
 	const [comments, setComments] = useState([]);
 	const [location, setLocation] = useState({ latitude: -23.1616483, longitude: -46.9271227 });
 	const { details, setVisible } = useDetails();
+	const [refresh, setRefresh] = useState(true);
 
 	function hide() {
+		setRefresh(!refresh);
 		setVisible(false);
 	}
 
 	// Atualizando comentarios e mapa
-	useEffect(() => {
+	if(refresh) {
 		// Passando lat e lon para float
 		setLocation({
 			latitude: parseFloat(details.data.Latitude),
@@ -54,7 +56,9 @@ function Detail(props) {
 				.then(response => setComments(response.data.comments))
 				.catch(error => console.log(error));
 		}
-	}, [details])
+
+		setRefresh(!refresh);
+	}
 
 	if (!didMount) {
 		return null;
@@ -128,7 +132,7 @@ function Detail(props) {
 					<View style={{ width: "100%", ...CommentsContainer }}>
 						{
 							comments.map((comment, i) =>
-								<Comment data={comment} key={i} />
+								<Comment data={comment} problemId={details.data.ID} key={i} />
 							)
 						}
 					</View>

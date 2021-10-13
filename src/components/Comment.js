@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Text, Image, TouchableOpacity, Alert } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome5";
+import axios from "axios";
 
+import { API_URL } from "@env";
 import { useAccount } from "../contexts/AccountContext";
 
 function Comment(props) {
@@ -9,19 +11,28 @@ function Comment(props) {
 	const [display, setDisplay] = useState("flex");
 	const { account } = useAccount();
 
+	const options = {
+		headers: {
+			token: account.token,
+			email: account.email,
+		}
+	};
+
 	const reportConfirmation = () => {
 		return Alert.alert(
 			"Você deseja denunciar esse comentário?",
 			"Nós iremos analisar e caso seja confirmada a denuncia iremos tomar as devidas providências.",
 			[
 				{
-					text: "Sim",
+					text: "Sim.",
 					onPress: () => {
-						console.log("comentario denunciado");
+						console.log(`asas`)
+						axios.post(`${API_URL}/report-comment/${data.id}/problem/${props.problemId}`, {}, options)
+							.catch((err) => { console.log(err) });
 					},
 				},
 				{
-					text: "Não",
+					text: "Não.",
 				},
 			]
 		);
@@ -33,13 +44,16 @@ function Comment(props) {
 			"Ele não podera ser visto ou recuperado após isso.",
 			[
 				{
-					text: "Sim.",
+					text: "Sim",
 					onPress: () => {
 						setDisplay("none");
+						console.log(`${API_URL}/comment/${data.id}/problem/${props.problemId}`)
+						axios.delete(`${API_URL}/comment/${data.id}/problem/${props.problemId}`, options)
+							.catch((err) => { console.log(err) });
 					},
 				},
 				{
-					text: "Não.",
+					text: "Não",
 				},
 			]
 		);
