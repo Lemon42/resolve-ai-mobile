@@ -21,12 +21,11 @@ function Comment(props) {
 	const reportConfirmation = () => {
 		return Alert.alert(
 			"Você deseja denunciar esse comentário?",
-			"Nós iremos analisar e caso seja confirmada a denuncia iremos tomar as devidas providências.",
+			"Nós iremos analisar e caso seja confirmada a denúncia iremos tomar as devidas providências.",
 			[
 				{
 					text: "Sim.",
 					onPress: () => {
-						console.log(`asas`)
 						axios.post(`${API_URL}/report-comment/${data.id}/problem/${props.problemId}`, {}, options)
 							.catch((err) => { console.log(err) });
 					},
@@ -41,13 +40,12 @@ function Comment(props) {
 	const deleteConfirmation = () => {
 		return Alert.alert(
 			"Você deseja deletar esse comentário?",
-			"Ele não podera ser visto ou recuperado após isso.",
+			"Ele não poderá ser visto ou recuperado após isso.",
 			[
 				{
 					text: "Sim",
 					onPress: () => {
 						setDisplay("none");
-						console.log(`${API_URL}/comment/${data.id}/problem/${props.problemId}`)
 						axios.delete(`${API_URL}/comment/${data.id}/problem/${props.problemId}`, options)
 							.catch((err) => { console.log(err) });
 					},
@@ -87,7 +85,7 @@ const styles = StyleSheet.create({
 	wrapper: {
 		flex: 1,
 		width: "100%",
-		marginTop: 30,
+		marginTop: 15,
 		justifyContent: "space-between",
 		flexDirection: "row",
 
