@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, View, StyleSheet, Image, ActivityIndicator } from "react-native";
+import { Modal, View, StyleSheet, ActivityIndicator } from "react-native";
 
 function LockPage(props) {
 

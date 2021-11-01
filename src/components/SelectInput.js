@@ -7,10 +7,8 @@ import Icon from "react-native-vector-icons/FontAwesome5";
 function SelectInput(props) {
 	const style = StyleSheet.create({
 		wrapper: {
+			flex: 1,
 			height: 48,
-			display: "flex",
-			justifyContent: "center",
-			alignItems: "center",
 
 			borderWidth: 2.5,
 			borderRadius: 30,
@@ -26,6 +24,9 @@ function SelectInput(props) {
 			fontSize: 15,
 		},
 		inputAndroid: {
+			marginBottom: -5,
+			marginLeft: 10,
+			width: "100%",
 			color: props.color || "#2B2B2B",
 			fontFamily: "Poppins",
 			fontSize: 15,
@@ -43,13 +44,13 @@ function SelectInput(props) {
 		style.wrapper = {
 			...style.wrapper,
 			shadowOffset: { width: 10, height: 10, },
-			shadowColor: 'black',
+			shadowColor: "black",
 			shadowOpacity: 1.0,
-			elevation: 5,
+			//elevation: 5,
 
 			borderRadius: 2.5,
 			borderWidth: 2,
-			borderColor: 'white'
+			borderColor: "white",
 		}
 
 		style.iconContainer = { ...style.iconContainer, right: 0 }
@@ -64,7 +65,7 @@ function SelectInput(props) {
 					onValueChange={(value) => props.setValue(value)}
 					items={props.items}
 
-					useNativeAndroidPickerStyle={true}
+					useNativeAndroidPickerStyle={false}
 					placeholder={{
 						label: props.placeholder || 'Selecione um valor aqui',
 						color: "#919191",
@@ -78,6 +79,7 @@ function SelectInput(props) {
 								name={"sort-down"}
 								color="#999"
 								size={22}
+								style={{ marginBottom: 5 }}
 							/>
 						);
 					}}
@@ -91,9 +93,9 @@ function SelectInput(props) {
 			 */}
 			<Text
 				style={{
-					width: '100%',
-					height: '100%',
-					position: 'absolute',
+					width: "100%",
+					height: "100%",
+					position: "absolute",
 					bottom: 0,
 					left: 0,
 				}}>

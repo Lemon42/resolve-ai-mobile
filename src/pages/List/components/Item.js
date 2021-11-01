@@ -7,50 +7,73 @@ import { useDetails } from "../../../contexts/DetailsContext";
 import itemStyle from "../styles/feedItem";
 
 function Item(props) {
-	const { setVisible } = useDetails();
+	const data = props.data.data;
+	const { setDetails, setVisible } = useDetails();
 
-	const images = [
-		"https://s2.glbimg.com/BXoCVbSSUMqwk8SrldbMK3pYYbg=/0x0:1280x960/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2018/1/p/JbO1BoTCu5FmmTAWCQvA/cratera-joao-pessoa-bayeux.jpg",
-		"https://www.acritica.com/uploads/news/image/741937/show_buraco.jpeg",
-		"https://midias.gazetaonline.com.br/_midias/jpg/2018/11/12/buraco1-5873723.jpg",
-	];
-
-	function openDatais(){
+	function openDatais() {
+		setDetails(props.data);
 		setVisible(true);
+	}
+
+	function menuComponent() {
+		return (
+			<View View style={itemStyle.menuContainer} >
+				<Button icon="arrow-up" />
+				<Button icon="arrow-down" />
+				<Button icon="message-circle" />
+				<Button icon="share" />
+			</View>
+		);
+	}
+
+	function descriptionComponent(margin) {
+		return (
+			<TouchableOpacity TouchableOpacity onPress={openDatais} >
+				<Text style={margin ? itemStyle.description : {...itemStyle.description, marginTop: -20}} 
+					numberOfLines={2} ellipsizeMode="tail">
+					{data.Description || 'Sem descrição.'}
+				</Text>
+			</TouchableOpacity >
+		);
+	}
+
+	function returnComponents() {
+		if (props.data.images.length == 0) {
+			return (
+				<>
+					{descriptionComponent(false)}
+					{menuComponent()}
+				</>
+			);
+		} else {
+			return (
+				<>
+					{menuComponent()}
+					{descriptionComponent(true)}
+				</>
+			);
+		}
 	}
 
 	return (
 		<View style={styles.content}>
 			{/* Título */}
 			<TouchableOpacity style={itemStyle.titleContainer} onPress={openDatais}>
-				<Text style={itemStyle.title}>Buraco na rua</Text>
-				<Text style={itemStyle.city}>Jundiaí</Text>
+				<Text style={itemStyle.title}>{data.Title}</Text>
+
+				<Text style={itemStyle.city}>{data.City}</Text>
 			</TouchableOpacity>
 
 			{/* Imagens */}
 			<SliderBox
-				images={images}
+				images={props.data.images}
 
 				dotColor="#F8773B"
 				imageLoadingColor="#F8773B"
 				sliderBoxHeight={230}
 			/>
 
-			{/* Menu */}
-			<View style={itemStyle.menuContainer}>
-				<Button icon="arrow-up" />
-				<Button icon="arrow-down" />
-				<Button icon="message-circle" />
-				<Button icon="share" />
-			</View>
-
-			{/* Descrição ({problem.data.Description || 'Sem descrição.'}) */}
-			<TouchableOpacity onPress={openDatais}>
-				<Text style={itemStyle.description} numberOfLines={2} ellipsizeMode="tail">
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam iaculis placerat massa ut porta.
-					Ut quis viverra orci. Nunc eros tellus, ornare eget felis eu, bibendum efficitur mauris.
-				</Text>
-			</TouchableOpacity>
+			{returnComponents()}
 
 			<View style={styles.line} />
 		</View>
