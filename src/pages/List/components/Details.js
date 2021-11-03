@@ -54,7 +54,7 @@ function Detail(props) {
 	}
 
 	// Atualizando comentarios e mapa
-	if (refresh) {
+	if (refresh && props.isVisible) {
 		// Passando lat e lon para float
 		setLocation({
 			latitude: parseFloat(details.data.Latitude),
@@ -171,7 +171,7 @@ function Detail(props) {
 
 					{/* Mapa */}
 					{
-						details?.data?.latitude?.length != 0 ? (
+						!isNaN(location.latitude) ? (
 							<MapDetail location={location} />
 						) : null
 					}

@@ -12,7 +12,7 @@ function CitySelect(props) {
 			setActive(true);
 		}
 
-		props.setValue({ ...props.value, city: value });
+		props.sendForm({ ...props.value, city: value });
 	}
 
 	return (
@@ -30,7 +30,7 @@ function CitySelect(props) {
 
 				useNativeAndroidPickerStyle={false}
 				placeholder={{
-					label: "Cidade",
+					label: "Todas",
 					value: "false",
 					color: "#999"
 				}}

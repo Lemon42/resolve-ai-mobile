@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, TextInput, Text, TouchableOpacity, Dimensions, ActivityIndicator } from "react-native";
+import { 
+	View,
+	StyleSheet,
+	TextInput,
+	Text,
+	TouchableOpacity,
+	Dimensions,
+	ActivityIndicator,
+	Alert
+} from "react-native";
 import axios from "axios";
 import Icon from "react-native-vector-icons/FontAwesome5";
 
@@ -12,7 +21,7 @@ import { API_URL } from "@env";
 import { useDetails } from "../../contexts/DetailsContext";
 import { useAccount } from "../../contexts/AccountContext";
 
-function ListPage() {
+function ListPage(props) {
 	const { detailsVisible } = useDetails();
 	const [searching, setSearching] = useState(true);
 	const [problems, setProblems] = useState([]);
@@ -29,18 +38,24 @@ function ListPage() {
 	useEffect(() => {
 		axios.get(`${API_URL}/list-problems`, options)
 			.then((response) => setProblems(response.data))
-			.catch((error) => console.log(error));
+			.catch((error) => Alert.alert("Ops, tivemos um erro!", "Não foi possivel listar os problemas cadastrados."));
 
 		setSearching(false);
 	}, []);
 
-	function sendForm() {
+	function sendForm(newSearch) {
 		setSearching(true);
 
-		axios.get(`${API_URL}/search/${search.title}/${search.city}/${search.user}`, options)
+		if (newSearch != false){
+			setSearch(newSearch);
+		} else {
+			newSearch = search;
+		}
+		
+		axios.get(`${API_URL}/search/${newSearch.title}/${newSearch.city}/${newSearch.user}`, options)
 			.then((response) => setProblems(response.data))
-			.catch((error) => console.log(error));
-
+			.catch(() => Alert.alert("Ops, tivemos um erro!", "Estamos trabalhando nisso."));
+		
 		setSearching(false);
 	}
 
@@ -67,17 +82,17 @@ function ListPage() {
 						onChangeText={value => changeTitle(value)}
 					/>
 					<View style={styles.searchButtonContainer}>
-						<TouchableOpacity onPress={sendForm} style={styles.searchButton}>
+						<TouchableOpacity onPress={() => sendForm(false)} style={styles.searchButton}>
 							<Icon name="search" size={20} color="#FFF" />
 						</TouchableOpacity>
 					</View>
 				</View>
 
 				<View style={styles.optionsContainer}>
-					<CitySelect value={search} setValue={setSearch} />
+					<CitySelect value={search} sendForm={sendForm} />
 					<TouchableOpacity
 						style={search.user ? active.userButton : styles.userButton}
-						onPress={() => setSearch({ ...search, user: !search.user })}
+						onPress={() => sendForm({ ...search, user: !search.user })}
 					>
 						<Text style={search.user ? active.userButtonText : styles.userButtonText}>Castrados por você</Text>
 					</TouchableOpacity>
