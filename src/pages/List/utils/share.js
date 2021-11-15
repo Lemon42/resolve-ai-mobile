@@ -1,11 +1,12 @@
 import { Share } from "react-native";
 
-const onShare = async (props) => {
+const onShare = async (data) => {
 	try {
-		await Share.share({
-			message:
-				`Mensagem ${props.salve}`,
-		});
+		let options = {
+			message: `Nós ajude a compartilhar o problema '${data.data.Title}'. Saiba mais pelo aplicativo ResolveAi!`
+		};
+
+		await Share.share(options);
 	} catch (error) {
 		alert(error.message);
 	}

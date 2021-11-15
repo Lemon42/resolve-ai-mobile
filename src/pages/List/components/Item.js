@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { SliderBox } from "react-native-image-slider-box";
 import Button from "./Button";
 import { useDetails } from "../../../contexts/DetailsContext";
+import share from "../utils/share";
 
 import itemStyle from "../styles/feedItem";
 
@@ -26,7 +27,7 @@ function Item(props) {
 				<Button icon="arrow-up" onPress={() => {}} />
 				<Button icon="arrow-down" onPress={() => {}} />
 				<Button icon="message-circle" onPress={() => createComment()} />
-				<Button icon="share" onPress={() => {}} />
+				<Button icon="share" onPress={() => share(props.data)} />
 			</View>
 		);
 	}

@@ -166,7 +166,7 @@ function Detail(props) {
 						<Button icon="arrow-up" />
 						<Button icon="arrow-down" />
 						<Button icon="message-circle" onPress={() => goToComment()} />
-						<Button icon="share" onPress={() => share()} />
+						<Button icon="share" onPress={() => share(details)} />
 					</View>
 
 					{
