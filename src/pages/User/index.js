@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, TouchableOpacity, Text, Image, Alert, Linking } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
+import * as ImagePicker from "react-native-image-picker";
+
+import axios from "axios";
+import { API_URL } from "@env";
 
 import { useAccount } from '../../contexts/AccountContext';
 
@@ -9,6 +13,7 @@ import PageScrollView from "../../components/PageScrollView";
 function UserPage() {
 
 	const { account, signOut } = useAccount();
+	const [picture, setPicture] = useState(account.picture);
 
 	function logOut() {
 		return Alert.alert(
@@ -32,11 +37,50 @@ function UserPage() {
 		return Linking.openURL('mailto:resolveaidevs@outlook.com')
 	}
 
+	function editPicture() {
+		ImagePicker.launchImageLibrary(
+			{
+				mediaType: "photo",
+				includeBase64: false,
+			},
+			(response) => {
+				if (response.didCancel) {
+					return;
+				}
+
+				// Criando requisição para a imagem
+				var formData = new FormData();
+				formData.append("picture", {
+					name: response.fileName,
+					type: response.type,
+					uri:
+						Platform.OS === "android"
+							? response.uri
+							: response.uri.replace("file://", ""),
+				});
+
+				axios.put(`${API_URL}/profile-picture`, formData, {
+					headers: {
+						"Content-Type": "multipart/form-data",
+						"email": account.email,
+						"token": account.token
+					}
+				})
+					.then((response) => {
+						setPicture(response.uri);
+					})
+					.catch((error) => {
+						console.log(error);
+					});
+			}
+		)
+}
+
 	return (
 		<PageScrollView viewStyle={{ marginTop: 0 }}>
 			<View style={styles.header}>
 				<View style={styles.headerTop}>
-					<Image style={styles.image} source={{ uri: account.picture }} />
+					<Image style={styles.image} source={{ uri: picture }} />
 					<Text style={styles.name}>{account.name}</Text>
 				</View>
 
@@ -53,7 +97,7 @@ function UserPage() {
 					</View>
 
 					<View style={styles.headerBottomRight}>
-						<TouchableOpacity style={styles.editPicture}>
+						<TouchableOpacity onPress={() => editPicture()} style={styles.editPicture}>
 							<Text style={styles.editPictureText}>EDITAR FOTO</Text>
 						</TouchableOpacity>
 					</View>

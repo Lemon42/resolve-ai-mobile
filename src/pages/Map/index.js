@@ -40,7 +40,7 @@ function Map({ navigation }) {
 					placeholder="Altere a cidade aqui"
 
 					notForm={true}
-					color="#F8773B"
+					color="#1A1A1A"
 				/>
 			</View>
 		</View>
