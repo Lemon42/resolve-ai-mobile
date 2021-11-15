@@ -29,6 +29,14 @@ function Detail(props) {
 		return () => setDidMount(false);
 	}, []);
 
+	// Verificando se ele clicou em criar comentario
+	useEffect(() => {
+		if (details?.createComment) {
+			setTimeout(() => { goToComment() }, 500);
+			setDetails({...details, createComment: false});
+		}
+	}, [props.isVisible]);
+
 	const createCommentRef = useRef(null);
 	const scrollView = useRef(null);
 	const commentInput = useRef(null);
@@ -37,7 +45,7 @@ function Detail(props) {
 	const [comments, setComments] = useState([]);
 	const [location, setLocation] = useState({ latitude: -23.1616483, longitude: -46.9271227 });
 	const [newComment, setNewComment] = useState("");
-	const { details, setVisible } = useDetails();
+	const { details, setVisible, setDetails } = useDetails();
 	const [refresh, setRefresh] = useState(true);
 
 	// Configuração para requisição
@@ -188,7 +196,7 @@ function Detail(props) {
 							}}>
 							<Image source={{ uri: account.picture }} style={styles.createCommentImage} />
 							<View style={styles.inputContainer}>
-								<TextInput 
+								<TextInput
 									ref={commentInput} onChangeText={(text) => setNewComment(text)}
 									placeholder="Digite um comentario" style={styles.commentInput}
 									placeholderTextColor="#B4B6B8"

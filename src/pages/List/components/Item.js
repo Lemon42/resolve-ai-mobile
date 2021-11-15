@@ -15,13 +15,18 @@ function Item(props) {
 		setVisible(true);
 	}
 
+	function createComment(){
+		setDetails({...props.data, createComment: true});
+		setVisible(true);
+	}
+
 	function menuComponent() {
 		return (
 			<View View style={itemStyle.menuContainer} >
-				<Button icon="arrow-up" />
-				<Button icon="arrow-down" />
-				<Button icon="message-circle" />
-				<Button icon="share" />
+				<Button icon="arrow-up" onPress={() => {}} />
+				<Button icon="arrow-down" onPress={() => {}} />
+				<Button icon="message-circle" onPress={() => createComment()} />
+				<Button icon="share" onPress={() => {}} />
 			</View>
 		);
 	}
@@ -29,11 +34,11 @@ function Item(props) {
 	function descriptionComponent(margin) {
 		return (
 			<TouchableOpacity TouchableOpacity onPress={openDatais} >
-				<Text style={margin ? itemStyle.description : {...itemStyle.description, marginTop: -20}} 
+				<Text style={margin ? itemStyle.description : { ...itemStyle.description, marginTop: -20 }}
 					numberOfLines={2} ellipsizeMode="tail">
 					{data.Description || 'Sem descrição.'}
 				</Text>
-			</TouchableOpacity >
+			</TouchableOpacity>
 		);
 	}
 
@@ -57,11 +62,13 @@ function Item(props) {
 
 	return (
 		<View style={styles.content}>
-			{/* Título */}
+			{/* Título e cidade */}
 			<TouchableOpacity style={itemStyle.titleContainer} onPress={openDatais}>
 				<Text style={itemStyle.title}>{data.Title}</Text>
 
-				<Text style={itemStyle.city}>{data.City}</Text>
+				{ data.City ? (
+					<Text style={{...itemStyle.city, marginBottom: 10}}>{data.City}</Text>
+				) : <View style={{marginBottom: 15}} /> }
 			</TouchableOpacity>
 
 			{/* Imagens */}

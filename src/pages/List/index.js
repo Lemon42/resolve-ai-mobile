@@ -21,7 +21,7 @@ import { API_URL } from "@env";
 import { useDetails } from "../../contexts/DetailsContext";
 import { useAccount } from "../../contexts/AccountContext";
 
-function ListPage(props) {
+function ListPage() {
 	const { detailsVisible } = useDetails();
 	const [searching, setSearching] = useState(true);
 	const [problems, setProblems] = useState([]);
