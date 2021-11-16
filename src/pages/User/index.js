@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet, TouchableOpacity, Text, Image, Alert, Linking } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 import * as ImagePicker from "react-native-image-picker";
@@ -11,9 +11,22 @@ import { useAccount } from '../../contexts/AccountContext';
 import PageScrollView from "../../components/PageScrollView";
 
 function UserPage() {
-
 	const { account, signOut } = useAccount();
 	const [picture, setPicture] = useState(account.picture);
+	const [userInfo, setUserInfo] = useState({ interactions: 1, problems: 1 });
+
+	// Pegando informações para o header para header
+	useEffect(() => {
+		const options = {
+			headers: {
+				email: account.email,
+				token: account.token
+			}
+		}
+		axios.get(`${API_URL}/user-info`, options)
+			.then((response) => setUserInfo(response.data))
+			.catch((err) => console.log(err));
+	}, []);
 
 	function logOut() {
 		return Alert.alert(
@@ -66,7 +79,7 @@ function UserPage() {
 						"token": account.token
 					}
 				})
-					.then((response) => {
+					.then(() => {
 						setPicture(response.uri);
 					})
 					.catch((error) => {
@@ -74,7 +87,7 @@ function UserPage() {
 					});
 			}
 		)
-}
+	}
 
 	return (
 		<PageScrollView viewStyle={{ marginTop: 0 }}>
@@ -87,11 +100,11 @@ function UserPage() {
 				<View style={styles.headerBottom}>
 					<View style={styles.headerBottomLeft}>
 						<View style={styles.info}>
-							<Text style={styles.infoTitle}>50</Text>
+							<Text style={styles.infoTitle}>{userInfo.problems}</Text>
 							<Text style={styles.infoLabel}>Denúncias</Text>
 						</View>
 						<View style={{ ...styles.info, marginLeft: 13 }}>
-							<Text style={styles.infoTitle}>42</Text>
+							<Text style={styles.infoTitle}>{userInfo.interactions}</Text>
 							<Text style={styles.infoLabel}>Interações</Text>
 						</View>
 					</View>
@@ -187,12 +200,14 @@ const styles = StyleSheet.create({
 		fontFamily: "Poppins Bold",
 		color: "#fff",
 		fontSize: 19,
-		marginVertical: 10,
+		marginTop: 10,
+		textAlign: "center",
 	},
 	infoLabel: {
 		fontFamily: "Poppins",
 		color: "#fff",
 		fontSize: 12,
+		textAlign: "center",
 	},
 
 	editPicture: {
