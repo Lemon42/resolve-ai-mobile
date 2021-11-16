@@ -11,6 +11,7 @@ import Icon from "react-native-vector-icons/FontAwesome5";
 import axios from "axios";
 
 import Button from "./Button";
+import RelevanceButton from "./RelevanceButton";
 import share from "../utils/share";
 import { useDetails } from "../../../contexts/DetailsContext";
 import MapDetail from "../../../components/Map/MapDetail";
@@ -163,8 +164,7 @@ function Detail(props) {
 
 					{/* Menu */}
 					<View style={itemStyle.menuContainer}>
-						<Button icon="arrow-up" />
-						<Button icon="arrow-down" />
+						<RelevanceButton problemId={details.data.ID} initialValue={details.isUp} />
 						<Button icon="message-circle" onPress={() => goToComment()} />
 						<Button icon="share" onPress={() => share(details)} />
 					</View>

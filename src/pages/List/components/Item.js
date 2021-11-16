@@ -7,6 +7,8 @@ import share from "../utils/share";
 
 import itemStyle from "../styles/feedItem";
 
+import RelevanceButton from "./RelevanceButton";
+
 function Item(props) {
 	const data = props.data.data;
 	const { setDetails, setVisible } = useDetails();
@@ -16,16 +18,15 @@ function Item(props) {
 		setVisible(true);
 	}
 
-	function createComment(){
-		setDetails({...props.data, createComment: true});
+	function createComment() {
+		setDetails({ ...props.data, createComment: true });
 		setVisible(true);
 	}
 
 	function menuComponent() {
 		return (
 			<View View style={itemStyle.menuContainer} >
-				<Button icon="arrow-up" onPress={() => {}} />
-				<Button icon="arrow-down" onPress={() => {}} />
+				<RelevanceButton problemId={data.ID} initialValue={props.data.isUp} />
 				<Button icon="message-circle" onPress={() => createComment()} />
 				<Button icon="share" onPress={() => share(props.data)} />
 			</View>
@@ -67,9 +68,9 @@ function Item(props) {
 			<TouchableOpacity style={itemStyle.titleContainer} onPress={openDatais}>
 				<Text style={itemStyle.title}>{data.Title}</Text>
 
-				{ data.City ? (
-					<Text style={{...itemStyle.city, marginBottom: 10}}>{data.City}</Text>
-				) : <View style={{marginBottom: 15}} /> }
+				{data.City ? (
+					<Text style={{ ...itemStyle.city, marginBottom: 10 }}>{data.City}</Text>
+				) : <View style={{ marginBottom: 15 }} />}
 			</TouchableOpacity>
 
 			{/* Imagens */}
@@ -99,6 +100,6 @@ const styles = StyleSheet.create({
 		borderBottomColor: "#ABABAB",
 		marginHorizontal: 8,
 	},
-})
+});
 
 export default Item;
