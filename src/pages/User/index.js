@@ -143,7 +143,7 @@ function UserPage() {
 				<View style={styles.line} />
 				<View style={styles.option}>
 
-					<Text style={{ ...styles.optionText, marginRight: 0 }}>Trabalho técnico para instituição Etec Vasco Antônio Venchiarutti.</Text>
+					<Text style={{ ...styles.optionText, marginLeft: 0 }}>Trabalho técnico para instituição Etec Vasco Antônio Venchiarutti.</Text>
 				</View>
 
 				<View style={styles.easterEgg}>

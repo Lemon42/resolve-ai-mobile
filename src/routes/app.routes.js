@@ -8,16 +8,7 @@ import ListPage from "../pages/List";
 import Map from "../pages/Map";
 import CreateProblem from "../pages/CreateProblem";
 import UserPage from "../pages/User";
-
-// Telas de teste
-function GalleryPage() {
-	return (
-		<View>
-			<Text>Galeria</Text>
-		</View>
-	);
-}
-// fim das paginas de teste
+import GalleryPage from "../pages/Gallery";
 
 const Tab = createBottomTabNavigator();
 

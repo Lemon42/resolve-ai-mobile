@@ -32,9 +32,9 @@ function CitySelect(props) {
 				placeholder={{
 					label: "Todas",
 					value: "false",
-					color: "#999"
+					color: "#cccbd2"
 				}}
-				placeholderTextColor="#999"
+				placeholderTextColor="#cccbd2"
 				style={isActive ? active : style}
 
 			/>
@@ -60,18 +60,18 @@ function CitySelect(props) {
 
 const style = {
 	inputIOS: {
-		color: "#999",
+		color: "#cccbd2",
 		fontFamily: "Poppins",
 		fontSize: 15,
 	},
 	inputAndroid: {
-		color: "#999",
+		color: "#cccbd2",
 		fontFamily: "Poppins",
 		fontSize: 15,
 
 		borderWidth: 1,
 		borderRadius: 4,
-		borderColor: "#999",
+		borderColor: "#cccbd2",
 
 		paddingRight: 2,
 		paddingTop: 2,

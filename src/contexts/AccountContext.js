@@ -31,9 +31,13 @@ export default function AccountProvider(props) {
 						}
 
 						return;
+					})
+					.catch((err) => {
+						console.log(err);
 					});
 			}
 		}
+		
 		loadStorageData();
 	}, []);
 
@@ -70,10 +74,9 @@ export default function AccountProvider(props) {
 			.delete(`${API_URL}/logout`, {
 				data: { email: email, token: token },
 			})
-			.then(async () => {
-				await AsyncStorage.clear();
-				setAccount({});
-			});
+
+			await AsyncStorage.clear();
+			setAccount({});
 	}
 
 	return (

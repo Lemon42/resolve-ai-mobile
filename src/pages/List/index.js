@@ -180,12 +180,12 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 4,
 		borderWidth: 1,
 		borderRadius: 4,
-		borderColor: "#999",
+		borderColor: "#cccbd2",
 
 		marginLeft: 8,
 	},
 	userButtonText: {
-		color: "#999",
+		color: "#cccbd2",
 		fontFamily: "Poppins",
 		fontSize: 15,
 		marginBottom: -3,

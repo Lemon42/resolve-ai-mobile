@@ -6,6 +6,7 @@ import { API_URL } from "@env";
 
 // Components
 import PageScrollView from "../../components/PageScrollView";
+import PageTitle from "../../components/PageTitle";
 import LockPage from "../../components/LockPage";
 import Map from "../../components/Map";
 import Input from "../../components/Input";
@@ -95,34 +96,37 @@ function CreateProblem({ navigation }) {
 	}
 
 	return (
-		<PageScrollView style={{ paddingHorizontal: 8 }}>
+		<PageScrollView viewStyle={{ marginTop: 0 }}>
 			<LockPage isLocked={isLocked} />
-			<Text style={styles.title}>Denunciar um problema</Text>
+			<PageTitle title="Denunciar problema" />
+			<View style={{ paddingHorizontal: 8 }}>
 
-			<Input onChangeText={(value) => setForm({ ...form, title: value })}
-				label="Título:" inLine={true} placeholder="De um título para o problema"
-				value={form.title}
-			/>
 
-			<Text style={styles.label}>Localização:</Text>
-			<View style={styles.mapContainer}>
-				<Map borderRadius={7} setSelectLocation={setSelectLocation} />
-			</View>
+				<Input onChangeText={(value) => setForm({ ...form, title: value })}
+					label="Título:" inLine={true} placeholder="De um título para o problema"
+					value={form.title}
+				/>
 
-			<TextArea onChangeText={(value) => setForm({ ...form, description: value })}
-				label="Descrição:" placeholder="Digite uma descrição para o problema"
-			/>
+				<Text style={styles.label}>Localização: </Text>
+				<View style={styles.mapContainer}>
+					<Map borderRadius={7} setSelectLocation={setSelectLocation} />
+				</View>
 
-			<Text style={styles.label}>Imagens:</Text>
-			<MultipleImagesInput images={images} setImages={setImages} />
+				<TextArea onChangeText={(value) => setForm({ ...form, description: value })}
+					label="Descrição:" placeholder="Digite uma descrição para o problema"
+				/>
 
-			<View style={{ ...button.container, marginTop: 30, marginBottom: 15 }}>
-				<TouchableOpacity onPress={() => sendForm()}>
-					<Text style={button.button}>Adicionar</Text>
-				</TouchableOpacity>
-			</View>
+				<Text style={styles.label}>Imagens: </Text>
+				<MultipleImagesInput images={images} setImages={setImages} />
 
-			<Text style={styles.errorMessage}>{message}</Text>
+				<View style={{ ...button.container, marginTop: 30, marginBottom: 15 }}>
+					<TouchableOpacity onPress={() => sendForm()}>
+						<Text style={button.button}>Adicionar</Text>
+					</TouchableOpacity>
+				</View>
+
+				<Text style={styles.errorMessage}>{message}</Text>
+			</View >
 		</PageScrollView>
 	);
 }
