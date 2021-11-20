@@ -4,6 +4,8 @@ import { View, Text, TouchableOpacity, StyleSheet, Platform } from "react-native
 import MapView from "react-native-maps";
 import Geolocation from "react-native-geolocation-service";
 
+import Figure from "../../assets/svgs/marker.svg";
+
 export default class Map extends Component {
 	state = { region: null };
 
@@ -63,7 +65,11 @@ export default class Map extends Component {
 					>
 						{
 							this.state.markers.map((marker, index) => (
-								<MapView.Marker key={index} coordinate={marker.latlng} />
+								<MapView.Marker key={index} coordinate={marker.latlng} >
+									<View style={{ width: 45, height: 45, display: "flex", alignItems: "center", justifyContent: "center" }}>
+										<Figure width={45} height={45} color="#F8773B" />
+									</View>
+								</MapView.Marker>
 							))
 						}
 					</MapView>

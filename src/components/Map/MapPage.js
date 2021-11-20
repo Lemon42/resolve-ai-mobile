@@ -8,6 +8,8 @@ import axios from "axios";
 import { API_URL } from "@env";
 import { useAccount } from '../../contexts/AccountContext';
 
+import Figure from "../../assets/svgs/marker.svg";
+
 function Map(props) {
 	const cityLocations = [
 		{ name: "Jundiaí", lat: -23.1861268, lon: -46.8861839, },
@@ -115,6 +117,7 @@ function Map(props) {
 	return (
 		<View style={{ flex: 1 }}>
 			<View style={{ flex: 1, overflow: 'hidden' }}>
+
 				<MapView
 					style={{ flex: 1 }}
 					initialRegion={region}
@@ -124,6 +127,7 @@ function Map(props) {
 					region={region}
 					onRegionChangeComplete={(newRegion) => setRegion(newRegion)}
 				>
+
 					{
 						problems.length >= 1 ? (
 							// Caso existir problemas na localidade
@@ -131,10 +135,16 @@ function Map(props) {
 								let lat = parseFloat(problem.data.Latitude);
 								let lon = parseFloat(problem.data.Longitude);
 
-								return <MapView.Marker key={index}
-									coordinate={{ latitude: lat, longitude: lon }}
-									onPress={() => { props.problemOnDisplay(problem) }}
-								/>
+								return (
+									<MapView.Marker key={index}
+										coordinate={{ latitude: lat, longitude: lon }}
+										onPress={() => { props.problemOnDisplay(problem) }}
+									>
+										<View style={{width: 45, height: 45, display: "flex", alignItems: "center", justifyContent: "center"}}>
+											<Figure width={45} height={45} color="#F8773B" />
+										</View>
+									</MapView.Marker>
+								)
 							})
 						) : null
 					}

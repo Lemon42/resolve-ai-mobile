@@ -2,6 +2,8 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import MapView from "react-native-maps";
 
+import Figure from "../../assets/svgs/marker.svg";
+
 function MapDetail(props) {
 	return (
 		<View style={styles.container}>
@@ -16,7 +18,11 @@ function MapDetail(props) {
 					showsUserLocation={false}
 					loadingEnabled
 				>
-					<MapView.Marker coordinate={props.location} />
+					<MapView.Marker coordinate={props.location}>
+						<View style={{ width: 45, height: 45, display: "flex", alignItems: "center", justifyContent: "center" }}>
+							<Figure width={45} height={45} color="#F8773B" />
+						</View>
+					</MapView.Marker>
 				</MapView>
 			</View>
 		</View>
