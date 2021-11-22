@@ -5,6 +5,10 @@ function FrontPage({ navigation }) {
 	return (
 		<View style={styles.container}>
 			<View style={styles.imageContainer}>
+				<View style={styles.titleContainer}>
+					<Text style={{...styles.title, color: "#1A1A1A"}}>Resolve</Text>
+					<Text style={{...styles.title, color: "#F8773B"}}>Ai!</Text>
+				</View>
 				<Image
 					style={styles.image}
 					source={require("../../assets/images/wallpaper-front_page.jpg")}
@@ -35,6 +39,19 @@ const styles = StyleSheet.create({
 		flex: 1,
 		flexDirection: "column",
 	},
+	titleContainer: {
+		position: "absolute",
+		marginTop: 10,
+		width: "100%",
+		display: "flex",
+		justifyContent: "center",
+		flexDirection: "row",
+		zIndex: 9999,
+	},
+	title: {
+		fontFamily: "Poppins Black",
+		fontSize: 30,
+	},
 	imageContainer: {
 		flex: 1,
 		alignItems: "center",
@@ -46,7 +63,7 @@ const styles = StyleSheet.create({
 		resizeMode: "cover",
 		borderBottomLeftRadius: 250,
 		borderBottomRightRadius: 250,
-		zIndex: 9999,
+		zIndex: 9998,
 	},
 	buttonsContainer: {
 		marginTop: "10%",
